@@ -1,78 +1,51 @@
-import {  Toolbar, Box, AppBar} from '@mui/material';
-
-
-import { Link } from 'react-router-dom';
+import {Toolbar, Box, AppBar, Button, Typography } from '@mui/material';
+import { Settings } from 'lucide-react';
 
 const Header = () => {
 
   return (
-    <AppBar position="static" 
-    sx={{
-      backgroundColor: '#ffffffff',
-      display: 'flex', 
-      alignItems: 'center' , 
-      position: 'fixed' ,
-      zIndex: (theme) => theme.zIndex.drawer + 1,
-      }}>
-      <Toolbar sx={{ width: '100%', display: 'flex', flexDirection: 'column'}} >
-
-        <Box sx={{ transition: 'all 0.4s ease' }}>
-          <Box sx={{ display: 'flex', gap: 2, flexGrow: 1 }}>
-            <Box className="navlink-wrapper"
-            sx={{
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-              }}>
-              <Link to={'/about'} className="navlink"></Link>
-            </Box>
-
-            <Box className="navlink-wrapper"
-            sx={{
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-              }}>
-              <Link to={'/about'} className="navlink">記事 物理学系</Link>
-            </Box>
-
-            <Box className="navlink-wrapper"
-            sx={{
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-              }}>
-              <Link to={'/about'} className="navlink">電磁気学同好会</Link>
-            </Box>
-
-            <Box className="navlink-wrapper"
-            sx={{
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-              }}>
-              <Link to={'/about'} className="navlink">てきとう日記</Link>
-            </Box>
-
-            <Box className="navlink-wrapper"
-            sx={{
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center' 
-              }}>
-              <Link to={'/about'} className="navlink">なんでも提node出掲示板</Link>
-            </Box>
+    <div>
+      <AppBar
+        position="static"
+        sx={{
+          background: '#81BFDA',
+          boxShadow: '0 5px 8px rgba(117, 240, 247, 0.3)',
+          width:'100vm'
+        }}
+      >
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            borderBottom: 'white 1px solid',
+            minHeight: '50px',
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+            しゅみしゅみパラダイス
+          </Typography>
+          <Box sx={{ display: 'flex' }}>
+            <Button
+              color="inherit"
+              variant="text"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 0.5,
+                alignItems: 'center',
+                minWidth: 'auto',
+                mx: -2
+              }}
+            >
+              <Settings size={20} />
+              <Typography variant="caption" sx={{ fontWeight: '0.6rem', lineHeight: 1 }}>
+                Setting
+              </Typography>
+            </Button>
           </Box>
-        </Box>
-      </Toolbar>
-      <Box
-      sx={{
-        width:'100%',
-        height:'20px',
-        backgroundColor: 'rgba(0, 0, 0, 0.29)',
-      }}
-      />
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
