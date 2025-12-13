@@ -36,10 +36,7 @@ const Home: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <GradientBackground
-    sx={{
-      mt:7
-    }}>
+    <GradientBackground>
       {/* 画面中央に配置するコンテンツコンテナ (スマホサイズを想定) */}
       <Container maxWidth="sm">
         <Stack spacing={8}>
