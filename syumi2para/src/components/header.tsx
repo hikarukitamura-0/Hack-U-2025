@@ -8,16 +8,16 @@ const Header = () => {
       <AppBar
         position="static"
         sx={{
-          background: '#81BFDA',
+          background: '#FF8A65',
           boxShadow: '0 5px 8px rgba(117, 240, 247, 0.3)',
-          width:'100vm'
+          width:'100vm',
+          padding: 1
         }}
       >
         <Toolbar
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            borderBottom: 'white 1px solid',
             minHeight: '50px',
           }}
         >
