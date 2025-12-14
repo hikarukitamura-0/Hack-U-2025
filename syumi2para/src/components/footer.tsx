@@ -11,6 +11,13 @@ const Footer = () => {
     });
   };
 
+  const Top = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
+
   return (
     <Box sx={{}}>
       <Box
@@ -47,6 +54,7 @@ const Footer = () => {
         <Box>
           <Link
             component={RouterLink}
+            onClick={Top}
             to="/"
             sx={{
               color: 'white',
@@ -59,6 +67,7 @@ const Footer = () => {
           </Link>
           <Link
             component={RouterLink}
+            onClick={Top}
             to="/syousai"
             sx={{
               color: 'white',
