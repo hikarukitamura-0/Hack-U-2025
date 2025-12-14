@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import Syousai from './pages/syousai';
 import Header from './components/header';
+import Footer from './components/footer';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/syousai" element={<Syousai />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
   );
 }
