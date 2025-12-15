@@ -11,7 +11,7 @@ const Header = () => {
         sx={{
           background: '#000000ff',
           boxShadow: '0 5px 8px rgba(117, 240, 247, 0.3)',
-          width:'100vw',
+          width:'100%',
           padding: 1,
           borderBottom: 'white 1px solid'
         }}
@@ -21,7 +21,6 @@ const Header = () => {
             display: 'flex',
             justifyContent: 'space-between',
             minHeight: '50px',
-            
           }}
         >
           <Typography >
