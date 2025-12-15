@@ -41,16 +41,6 @@ const Footer = () => {
           }}>
           © 2025 ﾄｲﾚｯﾄﾍﾟｰﾊﾟｰﾌﾞﾗｼﾁｮｰｸﾏｲﾍﾟｯﾄ Inc.
         </Typography>
-        <Typography variant="body1" color="white"
-          sx={{
-            mb: 3 ,
-            marginTop: 1,
-            marginBottom: 1,
-            fontWeight: 700
-          }}>
-          コンテンツ
-        </Typography>
-        
         <Box>
           <Link
             component={RouterLink}
