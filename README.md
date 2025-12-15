@@ -25,13 +25,14 @@ HACK U高専2025　開発用リポジトリ
 ### 2. ブランチの命名規則
 
 作業内容がひと目でわかるよう、接頭辞を付けて統一します。
+リファクタリング:コード改善　読みやすくする作業のこと
 
 | 接頭辞 | 意味 | 例 |
 | :--- | :--- | :--- |
 | `feature/` | 新機能追加 | `feature/user-login-form` |
 | `bugfix/` | バグ修正 | `bugfix/api-error-on-checkout` |
 | `hotfix/` | 本番の緊急修正 | `hotfix/main-server-crash` |
-| `refactor/` | リファクタリング | `refactor/optimize-database-queries` |
+| `refactor/` | リファクタリング | `refactor/code` |
 | `docs/` | ドキュメント関連 | `docs/update-readme` |
 
 ---
