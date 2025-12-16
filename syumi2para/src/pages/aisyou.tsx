@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 
 // カスタムカラー定義 (元のスタイルを踏襲しつつ、主にアクセントに使用)
 const ACCENT_COLOR = '#000000ff'; // メインカラー（ブラック）
-//const HOVER_COLOR = '#d21dffff';  // アクセントカラー（マゼンタ/パープル）
+const HOVER_COLOR = '#d21dffff';  // アクセントカラー（マゼンタ/パープル）
 
 // 1. クリーンな背景スタイル
 const CleanBackground = styled(Box)(({ theme }) => ({
@@ -59,7 +59,7 @@ const Aisyou: React.FC = () => {
               相性を理解し、<br/>
               あなたの能力をよりHackする。
             </Typography>
-            <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 3 }} />
+            <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 6 }} />
           </Box>
 
           {/* 1. タイトル */}
@@ -70,7 +70,7 @@ const Aisyou: React.FC = () => {
               と<br/>
               あなたの相性
             </Typography>
-            <Typography variant="h1" component="h1" sx={{ fontWeight: 900, color: ACCENT_COLOR, mt: 5, mb: 0.5 }}>
+            <Typography variant="h1" component="h1" sx={{ fontWeight: 900, color: HOVER_COLOR, mt: 5, mb: 0.5 }}>
               {/* ===============相性計算結果をここに入れる！！！=============== */}
               ％
             </Typography>
