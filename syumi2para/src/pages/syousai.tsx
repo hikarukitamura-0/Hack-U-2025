@@ -15,13 +15,14 @@ import {
 import {
   Palette,
   Code,
-  ArrowForward,
   AttachMoney,
   AccessTime,
   RocketLaunch,
   Lightbulb,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Link as RouterLink } from "react-router-dom";
 
 // カスタムカラー定義 (元のスタイルを踏襲しつつ、主にアクセントに使用)
 const ACCENT_COLOR = '#000000ff'; // メインカラー（ブラック）
@@ -50,6 +51,13 @@ const DataBoxStyle = {
   px: 0,
   borderBottom: '1px solid #eee', // 軽い罫線で区切りを設ける
 };
+
+// 4. 移動時にページ最上部からスタート
+  const Top = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
 
 // 趣味紹介データの定義
 const hobbyData = {
@@ -97,8 +105,10 @@ const HobbyDetailPageModern: React.FC = () => {
             <Button
               variant="contained"
               size="large"
-              startIcon={<Code />}
-              onClick={() => window.open('https://www.figma.com/', '_blank')} 
+              startIcon={<FavoriteBorderIcon />}
+              component={RouterLink}
+              onClick={Top}
+              to="/aisyou"
               sx={{ 
                 width: { xs: '100%', sm: '80%' }, // スマホで幅いっぱいに
                 py: 2, 
@@ -110,7 +120,7 @@ const HobbyDetailPageModern: React.FC = () => {
                 }
               }}
             >
-              いますぐyoutubeで学び始める
+              いますぐ趣味との相性を知る
             </Button>
           </Box>
           
@@ -208,8 +218,10 @@ const HobbyDetailPageModern: React.FC = () => {
             <Button
               variant="outlined"
               size="large"
-              endIcon={<ArrowForward />}
-              onClick={() => window.open('https://www.figma.com/', '_blank')} 
+              endIcon={<FavoriteBorderIcon />}
+              component={RouterLink}
+              onClick={Top}
+              to="/aisyou"
               sx={{ 
                 width: '90%', 
                 py: 1.5,
@@ -223,7 +235,7 @@ const HobbyDetailPageModern: React.FC = () => {
                 }
               }}
             >
-              youtubeで学び始める
+              趣味との相性を知る
             </Button>
           </Box>
           

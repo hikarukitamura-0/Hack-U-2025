@@ -5,6 +5,7 @@ import Syousai from './pages/syousai';
 import Main from './pages/main';
 import Header from './components/header';
 import Footer from './components/footer';
+import Aisyou from './pages/aisyou';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/syousai" element={<Syousai />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/aisyou" element={<Aisyou />} />
         </Routes>
         <Footer/>
       </BrowserRouter>
