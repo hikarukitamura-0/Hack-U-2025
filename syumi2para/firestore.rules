@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. ユーザープロフィール (users)
+    match /users/{uid} {
+      // 自分のデータのみ読み書き可能
+      allow read, write: if request.auth.uid == uid;
+
+      // 新規作成時（データ整合性チェック）
+      allow create: if request.auth.uid == uid 
+                  && request.resource.data.name is string 
+                  && request.resource.data.major_dept is string 
+                  && request.resource.data.grade is number
+                  && request.resource.data.profile_text is string
+                  && request.resource.data.selected_hobbies is list;
+    }
+    
+    // 2. 趣味マスターデータ (hobbies)
+    match /hobbies/{hobbyId} {
+      // 誰でも読み取り可能
+      allow read: if true;
+
+      // 作成・更新・削除は管理者のみ許可 (運用者限定)
+      allow write: if get(/databases/$(database)/documents/admins/$(request.auth.uid)).exists(); 
+    }
+
+    // 3. スワイプ履歴 (swipes)
+    match /swipes/{swipeId} {
+      // 読み書きは認証済みユーザーのみ
+      allow read, write: if request.auth != null;
+
+      // 作成時: swiper_uidは自分、swiped_uidは別のユーザーで、かつユーザーが存在すること
+      allow create: if request.auth.uid == request.resource.data.swiper_uid
+                  && request.resource.data.swiper_uid != request.resource.data.swiped_uid
+                  && get(/databases/$(database)/documents/users/$(request.resource.data.swiped_uid)).data != null;
+
+      // 履歴は作成後の変更・削除不可
+      allow update, delete: if false; 
+    }
+
+    // 4. マッチング成立履歴 (matches)
+    match /matches/{matchId} {
+      // 読み取り: マッチングに含まれるユーザーのみ可能
+      allow read: if request.auth.uid == resource.data.user_a_uid ||
+                      request.auth.uid == resource.data.user_b_uid;
+
+      // 作成・更新・削除: Cloud Functions (Admin SDK) のみ許可
+      allow write: if false; 
+    }
+    
+    // 5. チャットルーム (chats) とメッセージ
+    match /chats/{matchId} {
+      // 読み取り: matchesコレクションのデータを使って、権限をチェック
+      allow read: if get(/databases/$(database)/documents/matches/$(matchId)).data.user_a_uid == request.auth.uid ||
+                      get(/databases/$(database)/documents/matches/$(matchId)).data.user_b_uid == request.auth.uid;
+                      
+      // 親ドキュメントの直接書き込みは禁止（Functionsが作成するため）
+      allow write: if false; 
+
+      // サブコレクション: messages
+      match /messages/{messageId} {
+        // 読み書き: 親チャットの読み取り権限があり、sender_uidが自分であることをチェック
+        allow write: if request.auth.uid == request.resource.data.sender_uid
+                     && (get(/databases/$(database)/documents/matches/$(matchId)).data.user_a_uid == request.auth.uid ||
+                        get(/databases/$(database)/documents/matches/$(matchId)).data.user_b_uid == request.auth.uid);
+        
+        allow read: if get(/databases/$(database)/documents/matches/$(matchId)).data.user_a_uid == request.auth.uid ||
+                        get(/databases/$(database)/documents/matches/$(matchId)).data.user_b_uid == request.auth.uid;
+      }
+    }
+  }
+}

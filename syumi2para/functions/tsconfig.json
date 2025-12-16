@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    // コンパイル対象のソースファイルを指定
+    "module": "commonjs",
+    // ターゲットとするJavaScriptのバージョン (Cloud Functionsの推奨バージョンに合わせる)
+    "target": "es2020",
+    // 出力先ディレクトリ
+    "outDir": "lib",
+    // ソースマップを生成
+    "sourceMap": true,
+    // strictモードを有効にして型安全性を高める
+    "strict": true,
+    // TypeScriptがどの環境で実行されるかを示します (Node.js)
+    "lib": [
+      "es2020"
+    ],
+    // すべてのコードパスで非nullのアサーションが実行されていることを確認
+    "esModuleInterop": true,
+    // ソースファイルが見つからなかったときにエラーを出さない
+    "skipLibCheck": true,
+    // Node.jsモジュールの解決方法を指定
+    "moduleResolution": "node"
+  },
+  "compileOnSave": true,
+  // ビルド対象のファイルを指定
+  "include": [
+    "src"
+  ]
+}
