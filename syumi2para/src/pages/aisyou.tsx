@@ -7,7 +7,7 @@ import {
   Divider,
 } from '@mui/material';
 import {
-  Palette,
+  Palette
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
@@ -27,7 +27,6 @@ const CleanBackground = styled(Box)(({ theme }) => ({
 const SectionTitleStyle = {
   fontWeight: 800,
   fontSize: '1.8rem', // 大きめのフォントでインパクトを出す
-  mt: 6, 
   mb: 1, // タイトルとサブ要素の距離を詰める
   color: ACCENT_COLOR,
 };
@@ -36,6 +35,7 @@ const SectionTitleStyle = {
 const aisyouData = {
   name: "UI/UXデザイン",
   icon: <Palette sx={{ fontSize: 60, color: ACCENT_COLOR }} />,
+  message: "これが運命の赤い糸か！！"
 };
 
 const Aisyou: React.FC = () => {
@@ -43,15 +43,49 @@ const Aisyou: React.FC = () => {
     <CleanBackground>
       {/* ContainerをmaxWidth="sm"に戻し、スマホでは適度な余白を確保 */}
       <Container maxWidth="sm" sx={{ p: { xs: 3, sm: 4 } }}> 
-        <Stack spacing={8}>
+        <Stack spacing={3}>
           
+          {/* 1. タイトル */}
+          <Box sx={{ textAlign: 'center', pt: 2 }}>
+            <Typography variant="h4" sx={SectionTitleStyle}>
+              しゅみ相性レベル
+            </Typography>
+            <Typography
+              variant="h6"
+              component="p"
+              color="text.secondary"
+              sx={{ fontWeight: 400, mb: 3, fontSize: { xs: '1rem', sm: '1.2rem' },  }}
+            >
+              相性を理解し、<br/>
+              あなたの能力をよりHackする。
+            </Typography>
+            <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 3 }} />
+          </Box>
+
           {/* 1. タイトル */}
           <Box sx={{ textAlign: 'center', pt: 2 }}>
             {aisyouData.icon}
             <Typography variant="h4" sx={SectionTitleStyle}>
-              {aisyouData.name}とあなたの相性
+              {aisyouData.name}
+              と<br/>
+              あなたの相性
             </Typography>
-            <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 3 }} />
+            <Typography variant="h1" component="h1" sx={{ fontWeight: 900, color: ACCENT_COLOR, mt: 5, mb: 0.5 }}>
+              {/* ===============相性計算結果をここに入れる！！！=============== */}
+              ％
+            </Typography>
+          </Box>
+
+          {/* 2. 相性コメント */}
+          <Box sx={{ textAlign: 'center', pt: 2 }}>
+            <Typography
+              variant="h6"
+              component="p"
+              color="text.secondary"
+              sx={{ fontWeight: 400, mb: 3, fontSize: { xs: '1rem', sm: '1.2rem' },  }}
+            >
+              {aisyouData.message}
+            </Typography>
           </Box>
         </Stack>
       </Container>
