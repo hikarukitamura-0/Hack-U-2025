@@ -1,32 +1,1727 @@
-[
-  { 
-    "id": 1, 
-    "name": "カメラ", 
-    "description": "街中や自然で風景を撮影するのが好きです", 
-    "imageUrl": "https://images.unsplash.com/photo-1542281286-9e0a16fb7346?w=400&h=300&fit=crop" 
+{
+  "programming_app": {
+    "name_ja": "プログラミング学習（アプリ制作）",
+    "category_id": "digital_tech",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["ロジカルシンキング", "問題解決力"],
+      "kosen_suitability": "どの学科でも論理回路や制御に応用可能",
+      "reason_to_start": "ポートフォリオとして就活・進学に直結"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0 (PCがあれば)",
+      "location": "自宅、学校、図書館（オンライン完結）",
+      "time_efficiency": "極めて高い（隙間時間で学習可能）"
+    }
   },
-  { 
-    "id": 2, 
-    "name": "料理", 
-    "description": "週末に凝った料理を作って友人に振る舞います", 
-    "imageUrl": "https://images.unsplash.com/photo-1506368249639-73a05d6f6488?w=400&h=300&fit=crop" 
+  "web_site_creation": {
+    "name_ja": "Webサイト/ブログの作成",
+    "category_id": "digital_tech",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["Web技術", "SEO", "情報発信力"],
+      "kosen_suitability": "情報発信や研究成果の公開に有用",
+      "reason_to_start": "デジタル時代の基礎スキル、収益化も視野に"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（ドメイン・サーバー代：年数千円）",
+      "location": "自宅（オンライン完結）",
+      "time_efficiency": "高い（記事作成は移動時間も利用可）"
+    }
   },
-  { 
-    "id": 3, 
-    "name": "登山", 
-    "description": "高い山を制覇するのが生きがいです", 
-    "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop" 
+  "ai_chatbot_utilization": {
+    "name_ja": "AIチャットボット（ChatGPTなど）の活用",
+    "category_id": "digital_tech",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["プロンプトエンジニアリング", "業務効率化"],
+      "kosen_suitability": "報告書やアイデア出しの効率が劇的に向上",
+      "reason_to_start": "最新技術を日常業務に取り入れる実践的な練習"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（無料版利用）",
+      "location": "どこでも（スマホ、PC）",
+      "time_efficiency": "極めて高い（時間短縮が目的）"
+    }
   },
-  { 
-    "id": 4, 
-    "name": "読書", 
-    "description": "特に歴史小説が好きで、休日は図書館に入り浸っています", 
-    "imageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd87?w=400&h=300&fit=crop" 
+  "drone_rc_diy": {
+    "name_ja": "ドローン/ラジコンの自作/改造",
+    "category_id": "digital_tech",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["メカニック", "電子工作", "制御プログラミング"],
+      "kosen_suitability": "電気・機械・制御系の知識が活かせる",
+      "reason_to_start": "趣味がそのまま卒業研究やコンテストに直結"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（パーツ、工具代：数万円〜）",
+      "location": "自宅（工作）、屋外（飛行）",
+      "time_efficiency": "低〜中（製作に時間と試行錯誤が必要）"
+    }
   },
-  { 
-    "id": 5, 
-    "name": "eスポーツ", 
-    "description": "特定の対戦ゲームを集中してプレイし、大会にも参加します", 
-    "imageUrl": "https://images.unsplash.com/photo-1598550880193-42e77b47e5b1?w=400&h=300&fit=crop" 
+  "custom_keyboard_assembly": {
+    "name_ja": "カスタムキーボードの組立てと設計",
+    "category_id": "digital_tech",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["電子工作", "半田付け", "デザインセンス"],
+      "kosen_suitability": "電気・電子回路の基礎知識を応用",
+      "reason_to_start": "毎日使うツールの最適化を通じた生産性向上"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（キット、パーツ代：数万円）",
+      "location": "自宅（静かな作業環境）",
+      "time_efficiency": "低〜中（パーツ選定や組み立てに時間を要する）"
+    }
+  },
+  "pc_building_customization": {
+    "name_ja": "自作PCの組み立てとカスタマイズ",
+    "category_id": "digital_tech",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["ハードウェア知識", "システム構築", "コスト分析"],
+      "kosen_suitability": "PCの仕組みを理解することで、ソフトウェア開発の理解が深まる",
+      "reason_to_start": "性能やコストを自分で最適化できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "高（パーツ代：十数万円〜）",
+      "location": "自宅（広めの作業スペース）",
+      "time_efficiency": "中（パーツ選定やトラブルシューティングに時間が必要）"
+    }
+  },
+  "circuit_simulation": {
+    "name_ja": "電子回路シミュレーションソフトの活用",
+    "category_id": "digital_tech",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["電気回路の理論理解", "実験計画"],
+      "kosen_suitability": "電気・電子系の授業の予習・復習に最適",
+      "reason_to_start": "危険なく、コストゼロで複雑な回路の動作を確認できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜低",
+      "location": "自宅、学校（PC）",
+      "time_efficiency": "高い（物理実験より圧倒的に速い）"
+    }
+  },
+  "api_data_visualization": {
+    "name_ja": "ウェブ上のデータ（公開API）を用いた可視化",
+    "category_id": "digital_tech",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["データ分析", "プログラミング", "情報デザイン"],
+      "kosen_suitability": "研究データや観測データの分析に即応用可能",
+      "reason_to_start": "データを「見てわかる」形にするスキルは市場価値が高い"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（無料API、PC）",
+      "location": "自宅（オンライン完結）",
+      "time_efficiency": "高い（自動化可能）"
+    }
+  },
+  "excel_proficiency": {
+    "name_ja": "エクセルのピボットテーブル/VLOOKUP関数の習熟",
+    "category_id": "digital_tech",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["データ処理", "業務効率化", "ロジック構築"],
+      "kosen_suitability": "実験データや課題管理、卒業研究の整理に必須",
+      "reason_to_start": "事務作業やデータ整理の効率が劇的に改善する"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜中",
+      "location": "どこでも（PC）",
+      "time_efficiency": "極めて高い（時間短縮が目的）"
+    }
+  },
+  "information_security_basics": {
+    "name_ja": "情報セキュリティの基礎学習",
+    "category_id": "digital_tech",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["デジタルリテラシー", "危機管理"],
+      "kosen_suitability": "情報系だけでなく、全学科で求められる",
+      "reason_to_start": "自身の情報資産を守るために必須の知識"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（オンライン講座、書籍）",
+      "location": "自宅、通学中",
+      "time_efficiency": "高い"
+    }
+  },
+  "typing_shortcuts": {
+    "name_ja": "タイピング練習/ショートカットキー習得",
+    "category_id": "digital_tech",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["PC操作効率"],
+      "kosen_suitability": "課題作成、プログラミング、レポート作成の速度が向上",
+      "reason_to_start": "すべてのデジタル作業のスピードが向上する"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅、学校（PC）",
+      "time_efficiency": "極めて高い（スキル習得が時間短縮に繋がる）"
+    }
+  },
+  "amateur_radio": {
+    "name_ja": "アマチュア無線の基礎知識と交信",
+    "category_id": "digital_tech",
+    "sort_key": 12,
+    "recommendation": {
+      "skills": ["無線工学", "通信技術", "法規"],
+      "kosen_suitability": "電気・電子系の知識を実践的に応用できる",
+      "reason_to_start": "災害時にも役立つスキル、広域なコミュニケーションが可能"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（数千円〜数万円）",
+      "location": "自宅、屋外（アンテナ設置）",
+      "time_efficiency": "低〜中（資格取得と機材の準備が必要）"
+    }
+  },
+  "it_newsletter_summary": {
+    "name_ja": "IT関連のニュースレター購読と要約",
+    "category_id": "digital_tech",
+    "sort_key": 13,
+    "recommendation": {
+      "skills": ["最新技術のキャッチアップ", "情報整理"],
+      "kosen_suitability": "専門分野の最新トレンドを把握できる",
+      "reason_to_start": "常に進化する技術分野で取り残されないようにする"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（無料ニュースレター）",
+      "location": "通学中、休憩中（スマホ）",
+      "time_efficiency": "高い（インプット）"
+    }
+  },
+  "deep_programming_language_learning": {
+    "name_ja": "プログラミング言語（一つを深く）の学習",
+    "category_id": "digital_tech",
+    "sort_key": 14,
+    "recommendation": {
+      "skills": ["専門的なコード記述", "ライブラリ活用"],
+      "kosen_suitability": "卒業研究や専門科目での応用力が格段に上がる",
+      "reason_to_start": "応用力のある深い知識は、就職時に大きな武器になる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅、学校",
+      "time_efficiency": "低〜中（集中的な学習が必要）"
+    }
+  },
+  "3d_printer_filament_research": {
+    "name_ja": "3Dプリンター用のフィラメント/素材の研究",
+    "category_id": "digital_tech",
+    "sort_key": 15,
+    "recommendation": {
+      "skills": ["材料科学の基礎", "造形技術"],
+      "kosen_suitability": "機械・材料系の知識を実物制作に応用",
+      "reason_to_start": "モノづくりを深く追求し、作品の品質を高められる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（プリンターがあれば：フィラメント代、数千円）",
+      "location": "自宅（換気の良い場所）",
+      "time_efficiency": "低〜中（試作、温度設定などに時間を要する）"
+    }
+  },
+  "editor_customization": {
+    "name_ja": "エディタ（Vim/Emacsなど）のカスタマイズ",
+    "category_id": "digital_tech",
+    "sort_key": 16,
+    "recommendation": {
+      "skills": ["PC操作効率化", "設定ファイルの理解"],
+      "kosen_suitability": "プログラミングやサーバー操作の速度が飛躍的に向上",
+      "reason_to_start": "自分の作業環境を徹底的に最適化できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅、学校（PC）",
+      "time_efficiency": "低（カスタマイズに時間を要するが、後に効率化）"
+    }
+  },
+  "security_bug_report_reading": {
+    "name_ja": "セキュリティに関するバグ報告書の読解",
+    "category_id": "digital_tech",
+    "sort_key": 17,
+    "recommendation": {
+      "skills": ["セキュリティ意識", "システムの脆弱性理解"],
+      "kosen_suitability": "情報システム設計時の安全性を高める知識",
+      "reason_to_start": "攻撃者の視点を学び、より安全なシステムを設計できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（公開情報）",
+      "location": "自宅（PC）",
+      "time_efficiency": "中"
+    }
+  },
+  "ai_prompt_engineering": {
+    "name_ja": "AIへの指示出し（プロンプト）の練習",
+    "category_id": "digital_tech",
+    "sort_key": 18,
+    "recommendation": {
+      "skills": ["論理的指示出し", "出力の最適化"],
+      "kosen_suitability": "AIを強力なアシスタントとして使いこなせる",
+      "reason_to_start": "AI時代の必須スキル、効率的な情報収集が可能"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "どこでも（スマホ、PC）",
+      "time_efficiency": "高い（即座に結果が得られる）"
+    }
+  },
+  "subscription_optimization": {
+    "name_ja": "サブスクリプションサービスの最適化",
+    "category_id": "digital_tech",
+    "sort_key": 19,
+    "recommendation": {
+      "skills": ["コスト分析", "経営シミュレーション"],
+      "kosen_suitability": "資源（費用）を効率的に管理する能力",
+      "reason_to_start": "無駄な出費を減らし、時間を有効活用するための金銭管理"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（アプリ利用）",
+      "location": "自宅（PC、スマホ）",
+      "time_efficiency": "高い"
+    }
+  },
+  "video_editing": {
+    "name_ja": "動画編集（YouTube/TikTokなど）",
+    "category_id": "creative",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["企画力", "構成力", "編集技術"],
+      "kosen_suitability": "研究発表やプレゼン資料を魅力的に見せられる",
+      "reason_to_start": "自己表現と収益化、将来の仕事にも繋がる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（ソフト代、PCスペック次第）",
+      "location": "自宅",
+      "time_efficiency": "低〜中（制作に時間を要する）"
+    }
+  },
+  "sns_post_analysis": {
+    "name_ja": "SNSでの写真/動画の投稿と分析",
+    "category_id": "creative",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["マーケティング", "データ分析", "情報発信"],
+      "kosen_suitability": "自分の成果物を効果的にアピールする練習",
+      "reason_to_start": "デジタル時代における自己ブランディング能力"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（スマホ）",
+      "location": "どこでも",
+      "time_efficiency": "高い（日常の隙間時間で実行）"
+    }
+  },
+  "digital_design": {
+    "name_ja": "デジタルイラスト/デザイン（Canva/Figmaなど）",
+    "category_id": "creative",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["視覚的な表現力", "デザイン原則"],
+      "kosen_suitability": "プレゼン資料やアプリのUI設計に直接役立つ",
+      "reason_to_start": "自分のアイデアを魅力的なビジュアルで伝えられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜中（無料ソフト利用、またはタブレット代）",
+      "location": "自宅、カフェ",
+      "time_efficiency": "中"
+    }
+  },
+  "webtoon_production": {
+    "name_ja": "Webtoon/デジタルコミックの制作",
+    "category_id": "creative",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["ストーリー構成", "描写力", "編集技術"],
+      "kosen_suitability": "ストーリーテリング能力は技術説明にも活きる",
+      "reason_to_start": "自分の創作意欲を満たし、デジタル作品として発表できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（タブレット、ソフト代）",
+      "location": "自宅",
+      "time_efficiency": "低（時間がかかる）"
+    }
+  },
+  "video_translation": {
+    "name_ja": "動画の翻訳/字幕制作",
+    "category_id": "creative",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["語学力", "リスニング力", "編集技術"],
+      "kosen_suitability": "海外の技術情報の理解と発信に繋がる",
+      "reason_to_start": "好きなコンテンツを通じて語学と技術を組み合わせる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "中〜低（翻訳に時間を要する）"
+    }
+  },
+  "original_goods_design": {
+    "name_ja": "Tシャツ/グッズのオリジナルデザイン制作",
+    "category_id": "creative",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["デザインスキル", "マーケティング", "簡易的な製品制作"],
+      "kosen_suitability": "オリジナルの実験器具やグッズ制作に応用",
+      "reason_to_start": "自分のデザインを形にして販売する経験ができる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（デザインソフト、初期試作品代）",
+      "location": "自宅（オンライン販売）",
+      "time_efficiency": "中"
+    }
+  },
+  "photography": {
+    "name_ja": "写真撮影（スマートフォン/ミラーレス）",
+    "category_id": "creative",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["構図", "光の理解", "記録技術"],
+      "kosen_suitability": "実験や研究成果の正確な記録、発表資料の質向上",
+      "reason_to_start": "日常の風景を美しく切り取る感性を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜高（スマホで¥0、カメラで数十万円）",
+      "location": "どこでも（街中、自然）",
+      "time_efficiency": "高い（散歩と両立）"
+    }
+  },
+  "film_camera_understanding": {
+    "name_ja": "写真の現像/フィルムカメラの仕組み理解",
+    "category_id": "creative",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["アナログ技術", "科学的基礎知識", "精密作業"],
+      "kosen_suitability": "化学・物理の知識をアナログ技術に応用",
+      "reason_to_start": "デジタルとは異なる奥深い表現方法を学ぶ"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（フィルム代、現像キット、カメラ）",
+      "location": "自宅（暗室）、屋外",
+      "time_efficiency": "低（現像に手間がかかる）"
+    }
+  },
+  "digital_illustration_techniques": {
+    "name_ja": "デジタルイラストのレイヤー/ブラシ技術の習熟",
+    "category_id": "creative",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["デジタルツールの応用力", "表現の幅"],
+      "kosen_suitability": "プレゼン資料やUIデザインの質を高める",
+      "reason_to_start": "クリエイティブな表現の基礎力を徹底的に磨く"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜中",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "thumbnail_design": {
+    "name_ja": "動画のサムネイルデザイン制作",
+    "category_id": "creative",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["マーケティング力", "視覚伝達デザイン"],
+      "kosen_suitability": "プレゼン資料の「表紙」デザインに応用",
+      "reason_to_start": "興味を惹きつけるデザインセンスを実践的に養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（無料ツール）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "anime_background_copying": {
+    "name_ja": "マンガ/アニメの背景画/美術設定の模写",
+    "category_id": "creative",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["空間表現", "遠近法", "デッサン力"],
+      "kosen_suitability": "CADや空間設計の理解が深まる",
+      "reason_to_start": "好きな作品を通じて、技術的な描画スキルを向上"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜低（画材またはタブレット）",
+      "location": "自宅、学校",
+      "time_efficiency": "低〜中（時間がかかる）"
+    }
+  },
+  "haiku_tanka_senryu": {
+    "name_ja": "俳句/短歌/川柳の制作",
+    "category_id": "creative",
+    "sort_key": 12,
+    "recommendation": {
+      "skills": ["限られた言葉で表現するロジカルな文章力"],
+      "kosen_suitability": "簡潔で正確なレポート作成能力の向上",
+      "reason_to_start": "感情や情景を論理的に構造化する練習になる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "どこでも（思考）",
+      "time_efficiency": "高い（隙間時間で制作）"
+    }
+  },
+  "handwritten_font_creation": {
+    "name_ja": "手書きフォントの制作とデジタル化",
+    "category_id": "creative",
+    "sort_key": 13,
+    "recommendation": {
+      "skills": ["文字デザイン", "デジタルツール連携", "細部へのこだわり"],
+      "kosen_suitability": "オリジナルなプレゼン資料や文書作成に活用",
+      "reason_to_start": "独自のスタイルをデジタル資産として残せる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（ペン、スキャナ、ソフト）",
+      "location": "自宅",
+      "time_efficiency": "低（非常に時間がかかる）"
+    }
+  },
+  "cg_vfx_basics": {
+    "name_ja": "CG/VFXの基礎学習",
+    "category_id": "creative",
+    "sort_key": 14,
+    "recommendation": {
+      "skills": ["映像表現", "3D空間認識", "計算機の仕組み理解"],
+      "kosen_suitability": "機械・建築系の3Dモデリングやシミュレーションに応用",
+      "reason_to_start": "複雑な技術を視覚的に表現する力を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜中（無料ソフト利用、PCスペック）",
+      "location": "自宅",
+      "time_efficiency": "低（レンダリングなど）"
+    }
+  },
+  "digital_music_mixing": {
+    "name_ja": "デジタル音楽のミキシング/マスタリング",
+    "category_id": "creative",
+    "sort_key": 15,
+    "recommendation": {
+      "skills": ["音響技術", "リスニング能力", "DAW操作"],
+      "kosen_suitability": "音響・通信技術の知識を実践的に応用",
+      "reason_to_start": "好きな音楽を深く理解し、自分の作品をプロレベルに近づけられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（ヘッドホン、DAWソフト）",
+      "location": "自宅（静かな場所）",
+      "time_efficiency": "低〜中"
+    }
+  },
+  "personal_color_analysis": {
+    "name_ja": "ファッションのパーソナルカラー診断と応用",
+    "category_id": "creative",
+    "sort_key": 16,
+    "recommendation": {
+      "skills": ["自己表現", "色彩学の学習", "マーケティング"],
+      "kosen_suitability": "プレゼンやプロダクトデザインにおける配色に応用",
+      "reason_to_start": "自分を魅力的に見せるセルフブランディング"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（診断サービス、参考書籍）",
+      "location": "自宅（鏡）",
+      "time_efficiency": "高い"
+    }
+  },
+  "interior_design": {
+    "name_ja": "部屋の照明/インテリアデザイン",
+    "category_id": "creative",
+    "sort_key": 17,
+    "recommendation": {
+      "skills": ["空間設計", "光の技術応用", "効率化"],
+      "kosen_suitability": "物理や電気の知識をQOL向上に活用",
+      "reason_to_start": "快適な学習・生活環境を自分で設計できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（照明器具、家具代）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "line_stamp_creation": {
+    "name_ja": "オリジナルLINEスタンプの制作と販売",
+    "category_id": "creative",
+    "sort_key": 18,
+    "recommendation": {
+      "skills": ["デジタルコンテンツ制作", "著作権の基礎知識"],
+      "kosen_suitability": "少ない労力で成果を出す企画力",
+      "reason_to_start": "クリエイティブな作品を販売する経験ができる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜低",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "logo_icon_design": {
+    "name_ja": "Webサイトのアイコン/ロゴデザイン制作",
+    "category_id": "creative",
+    "sort_key": 19,
+    "recommendation": {
+      "skills": ["視覚伝達の基礎", "デザイン原則"],
+      "kosen_suitability": "アプリやWebサービスの顔を作る練習",
+      "reason_to_start": "簡潔で効果的なビジュアルコミュニケーションを学ぶ"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0〜低",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "storyboard_creation": {
+    "name_ja": "絵コンテ/プリビジュアライゼーションの制作",
+    "category_id": "creative",
+    "sort_key": 20,
+    "recommendation": {
+      "skills": ["映像の構成力", "時間軸での思考"],
+      "kosen_suitability": "複雑な手順や実験の流れを図示する能力",
+      "reason_to_start": "アイデアを明確に伝えるための準備スキル"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（紙とペン）",
+      "location": "どこでも",
+      "time_efficiency": "中"
+    }
+  },
+  "calligraphy_lettering": {
+    "name_ja": "カリグラフィー/モダンレタリング",
+    "category_id": "creative",
+    "sort_key": 21,
+    "recommendation": {
+      "skills": ["美しい文字による表現", "集中力"],
+      "kosen_suitability": "丁寧な図面や文書作成への意識向上",
+      "reason_to_start": "手書きの温かみと技術的な美しさを両立できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（ペン、インク、紙）",
+      "location": "自宅（静かな場所）",
+      "time_efficiency": "中"
+    }
+  },
+  "diy_craft": {
+    "name_ja": "DIY/100均リメイク（簡単な家具/小物）",
+    "category_id": "craft",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["問題解決能力", "空間認識能力", "工具の使い方"],
+      "kosen_suitability": "手軽にモノづくりの基礎を学べる",
+      "reason_to_start": "自分の生活環境を自分で改善できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（材料費：数百円〜）",
+      "location": "自宅、ベランダ",
+      "time_efficiency": "中"
+    }
+  },
+  "plastic_model_painting": {
+    "name_ja": "プラモデル/フィギュアの組立と塗装",
+    "category_id": "craft",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["細部の精密作業", "集中力", "色使いのセンス"],
+      "kosen_suitability": "図面を正確に読み取り、立体にする練習",
+      "reason_to_start": "完成度の高い作品を作る達成感を得られる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（キット、塗料、工具代）",
+      "location": "自宅（換気の良い場所）",
+      "time_efficiency": "低（時間がかかる）"
+    }
+  },
+  "leather_craft_handicrafts": {
+    "name_ja": "レザークラフト/手芸（小物制作）",
+    "category_id": "craft",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["手先の器用さ", "計画性", "デザイン"],
+      "kosen_suitability": "材料の特性を理解し、製品の耐久性を考慮する",
+      "reason_to_start": "日常で使える実用的な小物を作れる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（道具、革材料）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "aquarium_terrarium": {
+    "name_ja": "アクアリウム/テラリウムの制作と管理",
+    "category_id": "craft",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["生態系管理のシミュレーション", "水質分析"],
+      "kosen_suitability": "環境科学や制御の知識を応用",
+      "reason_to_start": "命を育む責任感と、美しい環境をデザインする喜び"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（水槽、機材、生体代）",
+      "location": "自宅",
+      "time_efficiency": "低（維持管理に時間がかかる）"
+    }
+  },
+  "instrument_maintenance": {
+    "name_ja": "楽器の修理/メンテナンス（簡単なもの）",
+    "category_id": "craft",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["メカニック知識", "電子工作", "問題診断"],
+      "kosen_suitability": "機器の故障診断と修理の基礎",
+      "reason_to_start": "好きな道具を長く使うための技術が身につく"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（工具、消耗品代）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "used_item_repair": {
+    "name_ja": "中古品の修理/リペア（簡単なもの）",
+    "category_id": "craft",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["メカニック知識", "持続可能性", "分解・再構築のロジック"],
+      "kosen_suitability": "モノの仕組みを分解して理解する習慣",
+      "reason_to_start": "捨てるものを再生し、経済的・環境的にも良い"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（工具、ジャンク品代）",
+      "location": "自宅",
+      "time_efficiency": "低〜中"
+    }
+  },
+  "foreign_language_learning": {
+    "name_ja": "外国語学習（日常会話レベル）",
+    "category_id": "knowledge",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["コミュニケーション", "異文化理解"],
+      "kosen_suitability": "海外インターンや研究発表の機会拡大",
+      "reason_to_start": "グローバルなキャリアの土台を築く"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（アプリ、参考書）",
+      "location": "どこでも（通学中も可）",
+      "time_efficiency": "極めて高い（積み重ねが重要）"
+    }
+  },
+  "reading_non_fiction": {
+    "name_ja": "読書（小説/漫画以外）/電子書籍での読書",
+    "category_id": "knowledge",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["多角的な思考", "知識獲得", "文章読解力"],
+      "kosen_suitability": "専門分野以外の幅広い教養を身につける",
+      "reason_to_start": "複雑な社会を理解し、教養を深める"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（書籍代）",
+      "location": "どこでも",
+      "time_efficiency": "高い"
+    }
+  },
+  "non_major_qualification_study": {
+    "name_ja": "資格試験の勉強（専門外の基礎）",
+    "category_id": "knowledge",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["目標設定", "達成能力", "自己管理"],
+      "kosen_suitability": "計画的な学習習慣を身につける",
+      "reason_to_start": "自分の能力を客観的に証明できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（参考書、受験料）",
+      "location": "自宅、図書館",
+      "time_efficiency": "低〜中（まとまった時間が必要）"
+    }
+  },
+  "economics_investment_basics": {
+    "name_ja": "経済学/投資の基礎知識学習",
+    "category_id": "knowledge",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["資産形成", "社会理解", "リスク管理"],
+      "kosen_suitability": "卒業後のライフプランや事業計画に役立つ",
+      "reason_to_start": "社会に出てから必須となるお金の知識を学ぶ"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍、オンライン講座）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "psychology_basics": {
+    "name_ja": "心理学の基礎学習",
+    "category_id": "knowledge",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["対人理解", "自己管理", "プレゼン時の聴衆理解"],
+      "kosen_suitability": "チームでの協調性や指導力を高める",
+      "reason_to_start": "人間関係や自分の感情を論理的に理解できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "current_affairs_analysis": {
+    "name_ja": "時事問題/ニュースの構造分析と討論",
+    "category_id": "knowledge",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["社会理解", "論理的思考力", "情報整理"],
+      "kosen_suitability": "発表時の背景知識や社会的な意義を述べられる",
+      "reason_to_start": "社会人として必須の教養と意見を持つ力を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（ニュースアプリ）",
+      "location": "自宅、学校、友人との議論",
+      "time_efficiency": "高い"
+    }
+  },
+  "business_book_outlining": {
+    "name_ja": "ビジネス書/専門書のアウトプット読書会",
+    "category_id": "knowledge",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["知識の定着", "意見交換", "ファシリテーション"],
+      "kosen_suitability": "インプットを即座にアウトプットする習慣",
+      "reason_to_start": "読んだ知識を実社会で使える形に昇華させる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍代）",
+      "location": "オンライン、カフェ",
+      "time_efficiency": "中"
+    }
+  },
+  "statistics_probability_basics": {
+    "name_ja": "統計学/確率論の基礎学習",
+    "category_id": "knowledge",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["データに基づいた意思決定能力", "分析"],
+      "kosen_suitability": "実験データの評価や分析に必須",
+      "reason_to_start": "現代社会で溢れる情報を正しく読み解く力を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍、オンライン講座）",
+      "location": "自宅、学校",
+      "time_efficiency": "中"
+    }
+  },
+  "logical_thinking_training": {
+    "name_ja": "論理的思考（ロジカルシンキング）のトレーニング",
+    "category_id": "knowledge",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["複雑な問題解決の基礎", "思考の構造化"],
+      "kosen_suitability": "すべての技術的課題解決の基礎となる",
+      "reason_to_start": "感情に流されず、合理的に物事を考えられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（トレーニングアプリ、書籍）",
+      "location": "どこでも",
+      "time_efficiency": "高い"
+    }
+  },
+  "speed_reading": {
+    "name_ja": "速読/多読技術の習得",
+    "category_id": "knowledge",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["知識インプットの効率化", "集中力"],
+      "kosen_suitability": "大量の専門書や資料を効率よく読む",
+      "reason_to_start": "限られた時間でより多くの情報を得られる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（トレーニングアプリ、書籍）",
+      "location": "自宅",
+      "time_efficiency": "高い（習得後は極めて高い）"
+    }
+  },
+  "career_design": {
+    "name_ja": "キャリアデザイン/将来計画の具体的な作成",
+    "category_id": "knowledge",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["目標設定", "ロードマップ作成", "自己分析"],
+      "kosen_suitability": "進学や就職に向けた具体的な戦略を練る",
+      "reason_to_start": "将来のビジョンが明確になり、日々のモチベーションになる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（ノート、PC）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "copyright_basics": {
+    "name_ja": "著作権/知的財産権の基礎知識",
+    "category_id": "knowledge",
+    "sort_key": 12,
+    "recommendation": {
+      "skills": ["法的側面への理解", "トラブル回避"],
+      "kosen_suitability": "自身の研究成果や制作物を守る",
+      "reason_to_start": "クリエイティブ活動やビジネスにおいて必須の知識"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "finance_tax_basics": {
+    "name_ja": "金融商品の仕組み/税制の基礎学習",
+    "category_id": "knowledge",
+    "sort_key": 13,
+    "recommendation": {
+      "skills": ["社会生活に必要な教養", "財政管理"],
+      "kosen_suitability": "卒業後の生活や事業運営の基盤知識",
+      "reason_to_start": "賢くお金と付き合うための教養"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍、オンライン講座）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "live_streaming_interaction": {
+    "name_ja": "ライブ配信/ストリーミング視聴と交流",
+    "category_id": "community",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["コミュニティ運営", "トーク力", "傾聴力"],
+      "kosen_suitability": "異分野の人とのコミュニケーション能力を磨く",
+      "reason_to_start": "好きなコンテンツを通じて、社交性を高める"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（スマホ、PC）",
+      "location": "自宅",
+      "time_efficiency": "低（視聴時間が長い）"
+    }
+  },
+  "team_sports": {
+    "name_ja": "チームスポーツ（バスケットボール/フットサルなど）",
+    "category_id": "community",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["協調性", "戦略", "リーダーシップ"],
+      "kosen_suitability": "チーム開発やプロジェクト運営の経験に繋がる",
+      "reason_to_start": "健康維持と、集団での目標達成の楽しさを知る"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（用具代、施設利用料）",
+      "location": "公園、体育館、ジム",
+      "time_efficiency": "低（移動時間、活動時間がかかる）"
+    }
+  },
+  "local_volunteering": {
+    "name_ja": "地域ボランティア/清掃活動",
+    "category_id": "community",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["社会貢献意識", "コミュニケーション", "実行力"],
+      "kosen_suitability": "技術の社会実装の必要性を肌で感じる",
+      "reason_to_start": "地域社会との繋がりを築き、自己肯定感を高める"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "地域の公園、施設",
+      "time_efficiency": "低（週末などのまとまった時間）"
+    }
+  },
+  "local_event_assistance": {
+    "name_ja": "地域の祭り/イベントの手伝い",
+    "category_id": "community",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["企画運営の裏側", "ロジスティクス", "交渉"],
+      "kosen_suitability": "イベント開催や文化祭運営のスキルに直結",
+      "reason_to_start": "地域の活気づくりに貢献し、貴重な裏方経験を得る"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "地域のお祭り会場",
+      "time_efficiency": "低（週末など丸一日）"
+    }
+  },
+  "flea_market_participation": {
+    "name_ja": "地域密着型のマルシェ/フリーマーケット出店",
+    "category_id": "community",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["企画・販売・交渉の経験", "市場分析"],
+      "kosen_suitability": "自分の作ったモノを販売するビジネス経験",
+      "reason_to_start": "自分の価値を市場に問う実践的な経験"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（出店料、材料費）",
+      "location": "地域の会場、公園",
+      "time_efficiency": "低（準備と当日）"
+    }
+  },
+  "npo_short_term_participation": {
+    "name_ja": "地域のNPO/市民活動への短期参加",
+    "category_id": "community",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["社会課題への関心", "行動力", "多様な価値観の理解"],
+      "kosen_suitability": "技術が社会にどう貢献できるかを考える",
+      "reason_to_start": "自分の技術が役立つ場を見つける"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "地域のNPO事務所、現場",
+      "time_efficiency": "低（まとまった時間）"
+    }
+  },
+  "voice_training": {
+    "name_ja": "ボイストレーニング/話し方教室",
+    "category_id": "community",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["プレゼン", "コミュニケーション", "発声"],
+      "kosen_suitability": "発表や面接での自信と説得力向上",
+      "reason_to_start": "自分の意見を効果的に伝えるための物理的な技術"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（教室、オンラインレッスン代）",
+      "location": "自宅、教室",
+      "time_efficiency": "中"
+    }
+  },
+  "magic_practice": {
+    "name_ja": "マジック/手品の練習",
+    "category_id": "community",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["論理的な手順の記憶", "プレゼンテーション", "集中力"],
+      "kosen_suitability": "複雑な手順やロジックを正確に再現する",
+      "reason_to_start": "人を惹きつける非言語的なコミュニケーションを学ぶ"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（道具、書籍）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "board_game_meetup": {
+    "name_ja": "ボードゲームカフェ/交流会への参加",
+    "category_id": "community",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["リアルな戦略思考", "対人交渉", "社交性"],
+      "kosen_suitability": "AIやシミュレーションのロジックを人間関係に応用",
+      "reason_to_start": "ゲームを通じて、新しい友人や多様な考え方に触れる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（参加費、交通費）",
+      "location": "ボードゲームカフェ、交流会",
+      "time_efficiency": "低（数時間）"
+    }
+  },
+  "festival_volunteer": {
+    "name_ja": "野外フェス/音楽イベントでのボランティア",
+    "category_id": "community",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["イベント運営の裏側", "ロジスティクス", "危機管理"],
+      "kosen_suitability": "大規模なシステムが動く現場を体験",
+      "reason_to_start": "好きな文化を支える経験を得る"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（交通費程度）",
+      "location": "イベント会場",
+      "time_efficiency": "低（長期間）"
+    }
+  },
+  "tourism_volunteer": {
+    "name_ja": "観光案内ボランティア",
+    "category_id": "community",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["地域知識", "外国語を使う機会", "ホスピタリティ"],
+      "kosen_suitability": "自分の住む地域を深く理解し、説明する",
+      "reason_to_start": "観光客に自分の地域の魅力を伝える社会貢献"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "観光地、駅前",
+      "time_efficiency": "低（週末）"
+    }
+  },
+  "cooking_baking": {
+    "name_ja": "料理/お菓子作り（レシピ動画参考）",
+    "category_id": "wellbeing",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["手順の効率化", "栄養学の基礎", "化学的な変化の理解"],
+      "kosen_suitability": "実験手順を正確に踏む練習になる",
+      "reason_to_start": "経済的、健康的な食生活を自分で確立できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（食材費、調理器具）",
+      "location": "自宅のキッチン",
+      "time_efficiency": "中（まとめて作れば高）"
+    }
+  },
+  "strength_training": {
+    "name_ja": "筋力トレーニング（自宅/ジム）",
+    "category_id": "wellbeing",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["計画的な自己管理能力", "継続力", "栄養学"],
+      "kosen_suitability": "自分の身体をデータに基づいて管理・最適化する",
+      "reason_to_start": "健康維持と、タフな精神力を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（ウェア、ジム代）",
+      "location": "自宅、ジム",
+      "time_efficiency": "中"
+    }
+  },
+  "yoga_pilates": {
+    "name_ja": "ヨガ/ピラティス",
+    "category_id": "wellbeing",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["集中力", "体のメンテナンス", "ストレス管理"],
+      "kosen_suitability": "長時間座る作業による体調不良を予防",
+      "reason_to_start": "集中力と自律神経を整える"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（マット、オンライン動画）",
+      "location": "自宅",
+      "time_efficiency": "高い（30分から可能）"
+    }
+  },
+  "body_composition_data_management": {
+    "name_ja": "データ記録による体組成管理",
+    "category_id": "wellbeing",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["健康のための定量的な目標設定", "データ分析"],
+      "kosen_suitability": "データを元にPDCAサイクルを回す練習",
+      "reason_to_start": "漠然とした健康を数値で管理できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（体重計、アプリ）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "household_account_management": {
+    "name_ja": "家計簿/収支管理（アプリ活用）",
+    "category_id": "wellbeing",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["経営シミュレーション能力", "コスト分析"],
+      "kosen_suitability": "卒業後のライフプランや事業計画の基礎",
+      "reason_to_start": "お金を賢く使うための必須スキル"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（無料アプリ）",
+      "location": "どこでも（スマホ）",
+      "time_efficiency": "高い（日常の記録）"
+    }
+  },
+  "decluttering_organization": {
+    "name_ja": "断捨離/整理整頓（ミニマリスト志向）",
+    "category_id": "wellbeing",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["環境整備", "意思決定", "集中力向上"],
+      "kosen_suitability": "作業スペースを最適化し、思考をクリアにする",
+      "reason_to_start": "物理的な整理は思考の整理に繋がる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "低〜中（初期に時間がかかる）"
+    }
+  },
+  "efficient_study_methods": {
+    "name_ja": "効率的な勉強法の学習と実践",
+    "category_id": "wellbeing",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["学習効率の最大化", "自己改善", "情報整理"],
+      "kosen_suitability": "膨大な学習量を効率よくこなすために必須",
+      "reason_to_start": "自分の時間と労力を最大限に活かせる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍、オンライン講座）",
+      "location": "自宅",
+      "time_efficiency": "極めて高い"
+    }
+  },
+  "sleep_tracking_improvement": {
+    "name_ja": "睡眠時間の記録と改善",
+    "category_id": "wellbeing",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["健康管理", "集中力維持", "生活リズム構築"],
+      "kosen_suitability": "最高のパフォーマンスを発揮するための自己管理",
+      "reason_to_start": "睡眠の質は日中の生産性に直結する"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（アプリ、ウェアラブルデバイス）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "todo_schedule_management": {
+    "name_ja": "ToDoリスト/スケジュール管理の徹底",
+    "category_id": "wellbeing",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["タイムマネジメントスキル", "優先順位付け"],
+      "kosen_suitability": "課題やプロジェクトの納期管理に不可欠",
+      "reason_to_start": "忙しい高専生活を乗り切るための羅針盤"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（アプリ、ノート）",
+      "location": "どこでも",
+      "time_efficiency": "極めて高い"
+    }
+  },
+  "frugality_point_research": {
+    "name_ja": "節約術/ポイ活の研究",
+    "category_id": "wellbeing",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["情報収集", "経済的戦略", "分析力"],
+      "kosen_suitability": "コストを抑えて最大の効果を得るロジック",
+      "reason_to_start": "日々の生活の中で、経済的なメリットを追求できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅（情報収集）",
+      "time_efficiency": "高い"
+    }
+  },
+  "disaster_prep_management": {
+    "name_ja": "防災グッズ/備蓄のリスト作成と管理",
+    "category_id": "wellbeing",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["危機管理能力", "ロジスティクス", "計画性"],
+      "kosen_suitability": "非常時における安全確保と資源管理",
+      "reason_to_start": "自分と家族の命を守るための準備"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（グッズ代）",
+      "location": "自宅（保管場所）",
+      "time_efficiency": "中（初期に時間がかかる）"
+    }
+  },
+  "bullet_journaling": {
+    "name_ja": "手帳/日記（バレットジャーナルなど）の活用",
+    "category_id": "wellbeing",
+    "sort_key": 12,
+    "recommendation": {
+      "skills": ["思考の整理", "目標の可視化", "記録"],
+      "kosen_suitability": "課題やアイデア、学んだことを構造化して整理",
+      "reason_to_start": "自分の考えや成長を客観的に振り返る"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（ノート、ペン）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "mindfulness_meditation": {
+    "name_ja": "マインドフルネス瞑想/集中力トレーニング",
+    "category_id": "wellbeing",
+    "sort_key": 13,
+    "recommendation": {
+      "skills": ["脳のパフォーマンス向上", "ストレス管理", "集中力"],
+      "kosen_suitability": "長時間の学習や作業に必要な集中力を養う",
+      "reason_to_start": "感情に流されず、今すべきことに意識を向けられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（アプリ、動画）",
+      "location": "自宅（静かな場所）",
+      "time_efficiency": "高い"
+    }
+  },
+  "appliance_research": {
+    "name_ja": "家電製品の選び方/効率的な使い方リサーチ",
+    "category_id": "wellbeing",
+    "sort_key": 14,
+    "recommendation": {
+      "skills": ["賢い消費者になるための知識", "製品仕様の分析"],
+      "kosen_suitability": "技術的な視点で製品の真価を見抜く",
+      "reason_to_start": "生活の質を高め、無駄な出費を抑える"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅（オンライン）",
+      "time_efficiency": "高い"
+    }
+  },
+  "recycling_system_learning": {
+    "name_ja": "ゴミの分別/リサイクルの仕組みの学習",
+    "category_id": "wellbeing",
+    "sort_key": 15,
+    "recommendation": {
+      "skills": ["環境問題への関心", "実行力", "社会の仕組み理解"],
+      "kosen_suitability": "環境技術やサステナビリティへの意識向上",
+      "reason_to_start": "持続可能な社会の一員としての責任を果たす"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "meal_nutrition_calculation": {
+    "name_ja": "献立の栄養バランス計算と記録",
+    "category_id": "wellbeing",
+    "sort_key": 16,
+    "recommendation": {
+      "skills": ["健康管理", "データ分析", "食品科学"],
+      "kosen_suitability": "自分の身体を制御系とみなし、入力（食事）を最適化",
+      "reason_to_start": "最高の体調で学習に取り組める"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（アプリ、ノート）",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "food_preservation": {
+    "name_ja": "食材の長期保存法/冷凍保存術",
+    "category_id": "wellbeing",
+    "sort_key": 17,
+    "recommendation": {
+      "skills": ["食品科学と生活の効率化", "資源管理"],
+      "kosen_suitability": "材料を無駄なく活用するロジック",
+      "reason_to_start": "食費を節約し、調理の手間を減らせる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低",
+      "location": "自宅のキッチン",
+      "time_efficiency": "高い"
+    }
+  },
+  "soundproofing_improvement": {
+    "name_ja": "部屋の防音対策/音響環境の改善",
+    "category_id": "wellbeing",
+    "sort_key": 18,
+    "recommendation": {
+      "skills": ["物理的な知識", "QOL向上", "環境設計"],
+      "kosen_suitability": "物理学や音響技術の知識を応用",
+      "reason_to_start": "集中できる静かな学習環境を自分で作れる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（材料、工具）",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "utility_bill_analysis": {
+    "name_ja": "電気代/水道代の請求書の詳細分析",
+    "category_id": "wellbeing",
+    "sort_key": 19,
+    "recommendation": {
+      "skills": ["家計管理", "シミュレーション", "データ分析"],
+      "kosen_suitability": "エネルギー効率とコストの関係を定量的に分析",
+      "reason_to_start": "無駄を見つけて、節約につなげられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "高い"
+    }
+  },
+  "fire_starting_skills": {
+    "name_ja": "バーベキュー/キャンプファイアの火起こし技術",
+    "category_id": "wellbeing",
+    "sort_key": 20,
+    "recommendation": {
+      "skills": ["物理的な知識", "サバイバルスキル", "チームワーク"],
+      "kosen_suitability": "熱力学や燃焼に関する知識を実践",
+      "reason_to_start": "アウトドアでの必須スキル、達成感が大きい"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（着火剤、燃料）",
+      "location": "屋外、キャンプ場",
+      "time_efficiency": "中"
+    }
+  },
+  "homemade_fermentation": {
+    "name_ja": "自家製ビール/発酵食品づくり",
+    "category_id": "wellbeing",
+    "sort_key": 21,
+    "recommendation": {
+      "skills": ["微生物学や化学の応用", "手順の正確性"],
+      "kosen_suitability": "化学・生物系の知識を応用したモノづくり",
+      "reason_to_start": "科学的なプロセスを体験し、趣味の幅が広がる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（キット、材料）",
+      "location": "自宅（清潔な場所）",
+      "time_efficiency": "低（発酵に時間がかかる）"
+    }
+  },
+  "vehicle_mechanics_license": {
+    "name_ja": "自動車/バイクの仕組みや免許取得のための学習",
+    "category_id": "wellbeing",
+    "sort_key": 22,
+    "recommendation": {
+      "skills": ["専門知識", "行動範囲の拡大", "交通法規"],
+      "kosen_suitability": "機械・電気系の知識を乗り物の構造理解に活用",
+      "reason_to_start": "卒業後の生活やキャリアに直結する"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（教習所代、教材）",
+      "location": "教室、自宅",
+      "time_efficiency": "低（まとまった時間が必要）"
+    }
+  },
+  "cashless_optimization": {
+    "name_ja": "キャッシュレス決済/ポイント還元の最適化",
+    "category_id": "wellbeing",
+    "sort_key": 23,
+    "recommendation": {
+      "skills": ["最新の経済戦略の活用", "情報収集", "分析"],
+      "kosen_suitability": "コストパフォーマンスを最大限に高める戦略思考",
+      "reason_to_start": "日常の支払いを賢く、お得に済ませられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0（アプリ）",
+      "location": "どこでも",
+      "time_efficiency": "高い"
+    }
+  },
+  "local_travel_planning": {
+    "name_ja": "旅行（国内/近隣）の計画と実行",
+    "category_id": "exploration",
+    "sort_key": 1,
+    "recommendation": {
+      "skills": ["情報収集力", "ロジスティクス", "予算管理"],
+      "kosen_suitability": "プロジェクトの計画・実行・トラブルシューティングの練習",
+      "reason_to_start": "日常を離れ、新しい発見とリフレッシュ"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（交通費、宿泊費）",
+      "location": "現地",
+      "time_efficiency": "低（まとまった時間が必要）"
+    }
+  },
+  "camping_bbq": {
+    "name_ja": "キャンプ/BBQ",
+    "category_id": "exploration",
+    "sort_key": 2,
+    "recommendation": {
+      "skills": ["サバイバル知識", "チームワーク", "自然との関わり"],
+      "kosen_suitability": "限られた資源（火、水、材料）の管理能力",
+      "reason_to_start": "自然の中で心身をリフレッシュできる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（道具代、施設利用料）",
+      "location": "キャンプ場、公園",
+      "time_efficiency": "低（時間がかかる）"
+    }
+  },
+  "hiking_mountain_climbing": {
+    "name_ja": "ハイキング/登山（日帰り）",
+    "category_id": "exploration",
+    "sort_key": 3,
+    "recommendation": {
+      "skills": ["体力", "地図読みのスキル", "計画性"],
+      "kosen_suitability": "GPS、地図情報などの空間情報を活用",
+      "reason_to_start": "健康維持と、目標達成の喜びを得る"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（靴、ウェア）",
+      "location": "山、トレイル",
+      "time_efficiency": "中〜低（数時間〜丸一日）"
+    }
+  },
+  "walking_strolling": {
+    "name_ja": "ウォーキング/散歩（ポイ活や健康目的）",
+    "category_id": "exploration",
+    "sort_key": 4,
+    "recommendation": {
+      "skills": ["習慣化", "リフレッシュ", "目標設定"],
+      "kosen_suitability": "健康管理と、アイデアの整理時間として活用",
+      "reason_to_start": "手軽に始められ、健康とリフレッシュに繋がる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "どこでも",
+      "time_efficiency": "高い（日常の隙間時間）"
+    }
+  },
+  "cycling_road_bike": {
+    "name_ja": "サイクリング/ロードバイク",
+    "category_id": "exploration",
+    "sort_key": 5,
+    "recommendation": {
+      "skills": ["長距離移動の計画性", "メカニック知識", "体力"],
+      "kosen_suitability": "乗り物の構造理解とメンテナンス",
+      "reason_to_start": "行動範囲が広がり、体力も向上する"
+    },
+    "cost_conditions": {
+      "initial_cost": "高（自転車本体、装備）",
+      "location": "道路、サイクリングロード",
+      "time_efficiency": "低（数時間）"
+    }
+  },
+  "bouldering_climbing": {
+    "name_ja": "ボルダリング/クライミング",
+    "category_id": "exploration",
+    "sort_key": 6,
+    "recommendation": {
+      "skills": ["ルート分析", "問題解決能力", "戦略"],
+      "kosen_suitability": "複雑な問題の解決手順を考える練習",
+      "reason_to_start": "全身運動と、思考力を同時に鍛えられる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（シューズレンタル、施設利用料）",
+      "location": "クライミングジム",
+      "time_efficiency": "中"
+    }
+  },
+  "museum_gallery_visits": {
+    "name_ja": "美術館/博物館/展示会巡り",
+    "category_id": "exploration",
+    "sort_key": 7,
+    "recommendation": {
+      "skills": ["知的好奇心", "教養の深化", "鑑賞眼"],
+      "kosen_suitability": "科学技術史やデザインの歴史的背景を学ぶ",
+      "reason_to_start": "専門分野以外の教養を深める"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（入場料）",
+      "location": "美術館、博物館",
+      "time_efficiency": "中（数時間）"
+    }
+  },
+  "factory_industrial_tours": {
+    "name_ja": "工場見学/産業施設ツアーへの参加",
+    "category_id": "exploration",
+    "sort_key": 8,
+    "recommendation": {
+      "skills": ["技術や生産ラインの仕組みの学習", "実地経験"],
+      "kosen_suitability": "授業で学んだことが現場でどう活かされているか確認",
+      "reason_to_start": "自分の将来の進路を具体的にイメージできる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜中（交通費）",
+      "location": "企業の工場、施設",
+      "time_efficiency": "中（数時間〜半日）"
+    }
+  },
+  "science_museum_passport": {
+    "name_ja": "科学館/技術資料館の年間パスポート活用",
+    "category_id": "exploration",
+    "sort_key": 9,
+    "recommendation": {
+      "skills": ["定期的な知識の深掘り", "探求心"],
+      "kosen_suitability": "科学技術の知識を繰り返し確認・定着させる",
+      "reason_to_start": "興味のある分野を継続的に深掘りできる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（年間パスポート代）",
+      "location": "科学館",
+      "time_efficiency": "中（数時間）"
+    }
+  },
+  "used_book_recycle_shop_rounds": {
+    "name_ja": "古本屋/リサイクルショップ巡り",
+    "category_id": "exploration",
+    "sort_key": 10,
+    "recommendation": {
+      "skills": ["知識やアイテムの探索", "価値判断", "情報収集"],
+      "kosen_suitability": "必要な情報やアイテムを効率よく見つけ出す力",
+      "reason_to_start": "掘り出し物を見つける探求心と経済観念を養う"
+    },
+    "cost_conditions": {
+      "initial_cost": "低",
+      "location": "店舗",
+      "time_efficiency": "中"
+    }
+  },
+  "photo_walk": {
+    "name_ja": "カメラを持って街歩き（フォトウォーク）",
+    "category_id": "exploration",
+    "sort_key": 11,
+    "recommendation": {
+      "skills": ["観察力", "記録技術", "構図のセンス"],
+      "kosen_suitability": "日常の中に隠れた技術やデザインを見つける",
+      "reason_to_start": "視点を変えて日常を見ることで、感性が豊かになる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低〜高（カメラ代）",
+      "location": "街中",
+      "time_efficiency": "中"
+    }
+  },
+  "historical_site_research": {
+    "name_ja": "観光地の歴史/文化のリサーチ",
+    "category_id": "exploration",
+    "sort_key": 12,
+    "recommendation": {
+      "skills": ["情報収集と整理", "文化的な教養"],
+      "kosen_suitability": "自分の住む地域の歴史や背景を理解する",
+      "reason_to_start": "旅の楽しさを深め、知識を広げる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（書籍、ネット）",
+      "location": "自宅、現地",
+      "time_efficiency": "中"
+    }
+  },
+  "cafe_gourmet_logging": {
+    "name_ja": "カフェ/グルメ巡り（写真と記録）",
+    "category_id": "exploration",
+    "sort_key": 13,
+    "recommendation": {
+      "skills": ["SNS投稿スキル", "文章力", "トレンド把握"],
+      "kosen_suitability": "飲食店のビジネスモデルや空間デザインを分析",
+      "reason_to_start": "趣味を通じて、情報発信スキルを磨ける"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（飲食費）",
+      "location": "カフェ、飲食店",
+      "time_efficiency": "中"
+    }
+  },
+  "flea_market_app_selling": {
+    "name_ja": "フリマアプリでの販売（せどり）",
+    "category_id": "exploration",
+    "sort_key": 14,
+    "recommendation": {
+      "skills": ["市場分析", "交渉術", "ロジスティクス"],
+      "kosen_suitability": "ビジネスの基礎を実践的に学ぶ",
+      "reason_to_start": "不要なものを利益に変える経済活動を体験"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（仕入れ費用）",
+      "location": "自宅（出品作業）",
+      "time_efficiency": "中"
+    }
+  },
+  "traditional_craft_experience": {
+    "name_ja": "伝統工芸/職人体験（例：染物、ろくろ、ガラス細工）",
+    "category_id": "exploration",
+    "sort_key": 15,
+    "recommendation": {
+      "skills": ["モノづくりの理解", "手先の器用さ", "集中力"],
+      "kosen_suitability": "技術の継承と職人技の精密さを肌で感じる",
+      "reason_to_start": "日本のモノづくり精神に触れる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（体験費用）",
+      "location": "工房、施設",
+      "time_efficiency": "中（数時間）"
+    }
+  },
+  "tasting_skills": {
+    "name_ja": "テイスティング（コーヒー、紅茶、日本茶など）",
+    "category_id": "exploration",
+    "sort_key": 16,
+    "recommendation": {
+      "skills": ["味覚の分析", "知識の習得", "五感を鋭くする"],
+      "kosen_suitability": "センサーや計測の精密さを体感する",
+      "reason_to_start": "日常の飲み物をより深く楽しめるようになる"
+    },
+    "cost_conditions": {
+      "initial_cost": "中（豆、器具）",
+      "location": "自宅、専門店",
+      "time_efficiency": "中"
+    }
+  },
+  "specimen_collection": {
+    "name_ja": "昆虫/植物の標本作成と分類",
+    "category_id": "exploration",
+    "sort_key": 17,
+    "recommendation": {
+      "skills": ["系統学", "精密な作業", "観察力"],
+      "kosen_suitability": "生物系の知識を実践的に応用",
+      "reason_to_start": "自然科学への深い探求心を満たす"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（採集用具、標本箱）",
+      "location": "屋外、自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "old_map_geological_reading": {
+    "name_ja": "古地図/地質図の読解と探訪",
+    "category_id": "exploration",
+    "sort_key": 18,
+    "recommendation": {
+      "skills": ["空間情報", "歴史学の応用", "探求心"],
+      "kosen_suitability": "地理情報や測量技術の基礎理解",
+      "reason_to_start": "地域の歴史や地形の変化を深く理解できる"
+    },
+    "cost_conditions": {
+      "initial_cost": "低（地図、書籍）",
+      "location": "自宅、現地",
+      "time_efficiency": "中"
+    }
+  },
+  "camera_gear_research": {
+    "name_ja": "カメラレンズ/機材の研究と試し撮り",
+    "category_id": "exploration",
+    "sort_key": 19,
+    "recommendation": {
+      "skills": ["光学技術", "機材知識", "専門的なリサーチ"],
+      "kosen_suitability": "物理学や電子工学の知識を応用",
+      "reason_to_start": "表現の幅を広げるための道具を極める"
+    },
+    "cost_conditions": {
+      "initial_cost": "中〜高（レンズ、機材）",
+      "location": "自宅、屋外",
+      "time_efficiency": "中"
+    }
+  },
+  "sns_portfolio_creation": {
+    "name_ja": "SNSのプロフィール/アカウントのポートフォリオ化",
+    "category_id": "exploration",
+    "sort_key": 20,
+    "recommendation": {
+      "skills": ["デジタル上での自己ブランディング", "情報整理"],
+      "kosen_suitability": "自分の能力と成果をオンラインで効果的に提示",
+      "reason_to_start": "就職活動や進学に役立つデジタル履歴書を作る"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
+  },
+  "local_security_patrol": {
+    "name_ja": "地域の防犯活動/見守り活動への参加",
+    "category_id": "exploration",
+    "sort_key": 21,
+    "recommendation": {
+      "skills": ["社会貢献", "安全への意識", "協調性"],
+      "kosen_suitability": "地域社会の課題解決に貢献する意識",
+      "reason_to_start": "地域の安全を守る一員としての役割を果たす"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "地域",
+      "time_efficiency": "中"
+    }
+  },
+  "gadget_research_sharing": {
+    "name_ja": "ガジェット/PCパーツのリサーチと情報発信",
+    "category_id": "exploration",
+    "sort_key": 22,
+    "recommendation": {
+      "skills": ["情報整理能力", "技術理解", "レビュー作成"],
+      "kosen_suitability": "最新技術の動向を常に把握する習慣",
+      "reason_to_start": "自分の知識を共有し、他者に役立てる"
+    },
+    "cost_conditions": {
+      "initial_cost": "ほぼ¥0",
+      "location": "自宅",
+      "time_efficiency": "中"
+    }
   }
-]
+}
