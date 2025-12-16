@@ -1,15 +1,15 @@
 import React from 'react';
-import {
-  Box,
-  Typography,
-  Container,
-  Stack,
-  Divider,
-} from '@mui/material';
-import {
-  Palette
-} from '@mui/icons-material';
+import { Box, Typography, Container, Stack, Divider, Link } from '@mui/material';
+import { Palette } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import { Link as RouterLink } from "react-router-dom";
+
+//移動時にページ最上部からスタート
+  const Top = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  };
 
 // カスタムカラー定義 (元のスタイルを踏襲しつつ、主にアクセントに使用)
 const ACCENT_COLOR = '#000000ff'; // メインカラー（ブラック）
@@ -20,7 +20,7 @@ const CleanBackground = styled(Box)(({ theme }) => ({
   // 背景を純粋な白に設定し、洗練された印象に
   background: theme.palette.mode === 'dark' ? '#121212' : '#ffffff', 
   minHeight: '100vh',
-  padding: theme.spacing(4, 0), 
+  padding: theme.spacing(2, 0, 4, 0), 
 }));
 
 // 2. セクションタイトルのスタイル (モダンでシャープなデザイン)
@@ -45,7 +45,25 @@ const Aisyou: React.FC = () => {
       <Container maxWidth="sm" sx={{ p: { xs: 3, sm: 4 } }}> 
         <Stack spacing={3}>
           
-          {/* 1. タイトル */}
+          {/* 1. しゅみシンクロ診断へ移動 */}
+          <Box sx={{ textAlign: 'left' }}>
+            <Link
+            component={RouterLink}
+            onClick={Top}
+            to="/syousai"
+            sx={{
+              color: 'black',
+              fontWeight: 700,
+              textDecoration: 'none',
+              display: 'block',
+              marginBottom: 1,
+            }}
+          >
+            ◀しゅみシンクロ診断へ戻る
+          </Link>
+          </Box>
+
+          {/* 2. タイトル */}
           <Box sx={{ textAlign: 'center', pt: 2 }}>
             <Typography variant="h4" sx={SectionTitleStyle}>
               しゅみ相性レベル
@@ -62,7 +80,7 @@ const Aisyou: React.FC = () => {
             <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 6 }} />
           </Box>
 
-          {/* 1. タイトル */}
+          {/* 3. 相性比較対象紹介文 */}
           <Box sx={{ textAlign: 'center', pt: 2 }}>
             {aisyouData.icon}
             <Typography variant="h4" sx={SectionTitleStyle}>
@@ -76,7 +94,7 @@ const Aisyou: React.FC = () => {
             </Typography>
           </Box>
 
-          {/* 2. 相性コメント */}
+          {/* 4. 相性コメント */}
           <Box sx={{ textAlign: 'center', pt: 2 }}>
             <Typography
               variant="h6"
