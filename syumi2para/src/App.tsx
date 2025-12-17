@@ -6,6 +6,7 @@ import HobbyDetailPageModern from './pages/syousai';
 import Main from './pages/main';
 import Header from './components/header';
 import Footer from './components/footer';
+import Aisyou from './pages/aisyou';
 
 function App() {
   return (
