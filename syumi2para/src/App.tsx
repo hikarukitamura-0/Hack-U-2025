@@ -7,6 +7,7 @@ import Main from './pages/main';
 import SwipePage from './pages/swipe'; // 追加
 import Header from './components/header';
 import Footer from './components/footer';
+import Aisyou from './pages/aisyou';
 
 function App() {
   return (
