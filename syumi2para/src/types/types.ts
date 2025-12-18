@@ -1,6 +1,6 @@
 // 趣味データの型
 export interface Hobby {
-  id: number;
+  id: string;
   name: string;
   description: string;
   imageUrl: string;
@@ -10,5 +10,5 @@ export interface Hobby {
 export interface SwipeCardProps {
   hobby: Hobby;
   // onSwipe関数は、数値(id)と'left'または'right'の文字列を受け取り、何も返さない
-  onSwipe: (id: number, direction: 'left' | 'right') => void;
+  onSwipe: (id: string, direction: 'left' | 'right') => void;
 }

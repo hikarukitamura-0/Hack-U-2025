@@ -33,75 +33,58 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onNewSwipeCheckMatch = void 0;
-// V1 APIを明示的にインポートします
+exports.getHobbySyncRate = exports.onNewSwipeCheckMatch = void 0;
 const functionsV1 = __importStar(require("firebase-functions/v1"));
 const admin = __importStar(require("firebase-admin"));
 admin.initializeApp();
 const db = admin.firestore();
 /**
- * [Cloud Function] onNewSwipeCheckMatch
- * swipesコレクションに新しいLIKEが作成された際にトリガーされ、
- * 相互 LIKE であればマッチングを成立させる。
+ * [1] マッチング機能
+ * onNewSwipeCheckMatch
+ * swipesコレクションに新しいLIKEが作成された際にトリガーされ、相互LIKEならマッチング成立。
  */
-exports.onNewSwipeCheckMatch = functionsV1 // V1 APIの関数を使用
+exports.onNewSwipeCheckMatch = functionsV1
     .firestore.document('swipes/{swipeId}')
-    // onCreateの引数に明示的に型を付与してエラーを解消
     .onCreate(async (snapshot, context) => {
-    // データの読み込み（型アサーションを追加）
     const newSwipe = snapshot.data();
-    const swiperUid = newSwipe.swiper_uid; // アクションを実行したユーザー (自分)
-    const swipedUid = newSwipe.swiped_uid; // アクションの対象となったユーザー (相手)
-    const action = newSwipe.action; // アクションの種類
-    // 1. 処理のフィルタリング: 'LIKE' でない場合は終了
-    if (action !== 'LIKE') {
+    const swiperUid = newSwipe.swiper_uid;
+    const swipedUid = newSwipe.swiped_uid;
+    const action = newSwipe.action;
+    if (action !== 'LIKE')
         return null;
-    }
-    // 2. 相互 LIKE のチェック (相手が自分に LIKE しているか)
+    // 相互LIKEチェック
     const mutualLikeQuery = await db.collection('swipes')
         .where('swiper_uid', '==', swipedUid)
         .where('swiped_uid', '==', swiperUid)
         .where('action', '==', 'LIKE')
         .limit(1)
         .get();
-    // 3. マッチング不成立
     if (mutualLikeQuery.empty) {
         console.log(`Mutual LIKE not found for ${swiperUid} and ${swipedUid}.`);
         return null;
     }
-    // --- マッチング成立後の処理 (トランザクション処理) ---
-    // 4. マッチIDの決定と重複チェック
+    // マッチング成立処理
     const [userA, userB] = [swiperUid, swipedUid].sort();
     const matchId = `${userA}_${userB}`;
     const matchRef = db.collection('matches').doc(matchId);
-    // 5. 共通趣味の計算とデータ取得
     const [userADoc, userBDoc] = await Promise.all([
         db.collection('users').doc(userA).get(),
         db.collection('users').doc(userB).get(),
     ]);
-    // ユーザーが存在しない場合を考慮
     const hobbiesA = userADoc.data()?.selected_hobbies || [];
     const hobbiesB = userBDoc.data()?.selected_hobbies || [];
-    // 共通趣味のIDを抽出
     const commonHobbies = hobbiesA.filter((hobby) => hobbiesB.includes(hobby));
-    // 6. matches コレクションへの書き込み（トランザクション）
     try {
         await db.runTransaction(async (transaction) => {
-            // トランザクション内で重複がないことを最終確認
             const checkMatch = await transaction.get(matchRef);
-            if (checkMatch.exists) {
-                console.log('Match already confirmed in transaction.');
+            if (checkMatch.exists)
                 return;
-            }
-            const matchData = {
+            transaction.set(matchRef, {
                 user_a_uid: userA,
                 user_b_uid: userB,
                 timestamp_matched: admin.firestore.FieldValue.serverTimestamp(),
                 common_hobbies: commonHobbies,
-            };
-            // matches コレクションに書き込み
-            transaction.set(matchRef, matchData);
-            // (オプション) chats コレクションにチャットルームを初期化
+            });
             transaction.set(db.collection('chats').doc(matchId), {
                 users: [userA, userB],
                 timestamp_created: admin.firestore.FieldValue.serverTimestamp(),
@@ -114,5 +97,70 @@ exports.onNewSwipeCheckMatch = functionsV1 // V1 APIの関数を使用
     }
     console.log(`🎉 Match successful: ${matchId}`);
     return null;
+});
+/**
+ * [2] シンクロ率計算機能 (これがないと動きません！)
+ * getHobbySyncRate
+ * フロントエンドから呼び出され、ユーザーの好みと趣味のデータを比較してスコアを返す。
+ */
+exports.getHobbySyncRate = functionsV1.https.onCall(async (data, context) => {
+    // 1. 認証チェック
+    if (!context.auth) {
+        return { syncRate: 50, reason: "ログインが必要です" };
+    }
+    const { hobbyId } = data; // フロントから送られてきた趣味ID
+    const uid = context.auth.uid;
+    try {
+        // 2. データの取得
+        // hobbyIdをStringに変換して、IDが数値でも文字列でもヒットするようにする
+        const [userDoc, hobbyDoc] = await Promise.all([
+            db.collection('users').doc(uid).get(),
+            db.collection('hobbies').doc(String(hobbyId)).get()
+        ]);
+        const userData = userDoc.data();
+        const hobbyData = hobbyDoc.data();
+        // データがない場合のデフォルト値
+        if (!userData)
+            return { syncRate: 50, reason: "プロフィール設定がまだのようです。" };
+        if (!hobbyData)
+            return { syncRate: 50, reason: "趣味データが見つかりません。" };
+        let score = 60; // 基本スコア
+        let reason = "未知の可能性を秘めています。";
+        // 3. ロジック判定
+        const genre = userData.game_genre; // "puzzle", "fps", "rpg"
+        const category = hobbyData.category_id; // "digital_tech", "creative", etc...
+        // --- パズル好きの判定 ---
+        if (genre === 'puzzle') {
+            if (category === 'digital_tech' || category === 'knowledge') {
+                score += 30;
+                reason = "論理的思考を好むあなたに、構造をハックする楽しさを約束します。";
+            }
+        }
+        // --- FPS好きの判定 ---
+        else if (genre === 'fps') {
+            if (category === 'exploration' || category === 'digital_tech') {
+                score += 25;
+                reason = "瞬時の判断と効率を愛するあなたに、最高の没入感を提供します。";
+            }
+        }
+        // --- RPG好きの判定 ---
+        else if (genre === 'rpg') {
+            if (category === 'creative' || category === 'community') {
+                score += 25;
+                reason = "世界観を作り込み、物語を紡ぐ楽しさがここにあります。";
+            }
+        }
+        // 4. ランダムな揺らぎ (最大99%)
+        const drift = Math.floor(Math.random() * 5);
+        const finalRate = Math.min(score + drift, 99);
+        return {
+            syncRate: finalRate,
+            reason: reason
+        };
+    }
+    catch (error) {
+        console.error("計算エラー:", error);
+        return { syncRate: 50, reason: "計算中にエラーが発生しました" };
+    }
 });
 //# sourceMappingURL=index.js.map
