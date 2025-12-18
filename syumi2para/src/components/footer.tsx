@@ -1,13 +1,14 @@
 import { Box, Typography, Link } from '@mui/material';
 import logo from '../assets/logo_yoko.png';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth', // スムーズにスクロール
+      behavior: 'smooth',
     });
   };
 
@@ -17,6 +18,29 @@ const Footer = () => {
     });
   };
 
+  // 「詳細」をクリックした時のハンドラー
+  const handleDetailClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    Top();
+
+    // SessionStorageから直近の診断結果を取得
+    const savedResult = sessionStorage.getItem('last_diagnostic_result');
+    
+    if (savedResult) {
+      const parsed = JSON.parse(savedResult);
+      const hobbyId = parsed.hobby?.id;
+      if (hobbyId) {
+        // 保存された趣味がある場合はその詳細ページへ
+        navigate(`/syousai/${hobbyId}`, { 
+          state: { syncRate: parsed.rate, reason: "前回の診断結果です。" } 
+        });
+        return;
+      }
+    }
+    
+    // 診断結果がない場合は、とりあえずメインページか診断開始へ誘導
+    navigate('/main');
+  };
 
   return (
     <Box sx={{}}>
@@ -25,7 +49,7 @@ const Footer = () => {
         sx={{
           background: '#000000ff',
           boxShadow: '0 5px -8px rgba(117, 240, 247, 0.3)',
-          width:'100vw',
+          width: '100vw',
           padding: 3,
           borderTop: 'white 1px solid'
         }}
@@ -56,14 +80,20 @@ const Footer = () => {
             ホーム
           </Link>
           <Link
-            component={RouterLink}
-            onClick={Top}
-            to="/syousai"
+            component="button" // ボタン形式にしてハンドラーで制御
+            onClick={handleDetailClick}
             sx={{
               color: 'white',
               textDecoration: 'none',
               display: 'block',
               marginBottom: 1,
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              fontSize: 'inherit',
+              cursor: 'pointer',
+              textAlign: 'left',
+              fontFamily: 'inherit'
             }}
           >
             詳細

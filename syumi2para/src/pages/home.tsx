@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // 診断ページへ飛ばすために必要
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -20,33 +20,15 @@ import {
 import logo from '../assets/logo_main.png';
 import lets from '../assets/lets_modan.png';
 
-// --- スタイル定義 ---
 const ACCENT_COLOR = '#000000'; 
 const HOVER_COLOR = '#d21dff';
-const MONO_COLOR = 'black';
 
-const DescriptionStyle = {
-  fontWeight: 400,
-  fontSize: { xs: '1rem', sm: '1.2rem' },
-  color: 'text.secondary', 
-};
-
-const HeadlineStyle = {
-  fontWeight: 800,
-  fontSize: { xs: '1.8rem', sm: '3rem' }, 
-  lineHeight: 1.2,
-  mb: 3,
-  color: MONO_COLOR,
-};
-
-// 背景グラデーション
 const GradientBackground = styled(Box)({
   background: `linear-gradient(135deg, #ebc8ff 0%, #ffffff 70%)`,
   minHeight: '100vh',
   padding: '32px 0',
 });
 
-// 適性タグ
 const hobbyCategories = [
   { name: 'ロジカル（パズル/戦略）', icon: <Code sx={{ fontSize: 18 }} /> },
   { name: 'クリエイティブ（創作）', icon: <Palette sx={{ fontSize: 18 }} /> },
@@ -55,19 +37,17 @@ const hobbyCategories = [
 ];
 
 const Home: React.FC = () => {
-  const navigate = useNavigate(); // navigate関数を初期化
+  const navigate = useNavigate();
 
-  // 診断ページ(/main)へ遷移する関数
+  // ★ 修正ポイント：遷移先を /swipe に変更
   const startDiagnosis = () => {
-    navigate('/main');
+    navigate('/swipe');
   };
 
   return (
     <GradientBackground>
       <Container maxWidth="sm">
         <Stack spacing={8}>
-          
-          {/* 1. ロゴセクション */}
           <Box sx={{ textAlign: 'center', pt: 4 }}>
             <Box sx={{ my: 4 }}>
               <img src={logo} alt='しゅみしゅみぱらだいす' style={{ width: '300px', maxWidth: '80%' }} />
@@ -75,7 +55,6 @@ const Home: React.FC = () => {
             </Box>
           </Box>
 
-          {/* 2. キャッチコピーと開始ボタン */}
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '1.8rem', sm: '2.5rem' }, mb: 3 }}>
               「ただ日々を貪る高専生」<br/>↓<br/>「高専生のあるべき姿へ」
@@ -84,7 +63,6 @@ const Home: React.FC = () => {
               マチアプ感覚の直感スワイプで、<br/>ベストな「しゅみ」を見つけよう。
             </Typography>
             
-            {/* ★ 修正ポイント：onClickで診断ページへ飛ばす */}
             <Button
               variant="contained"
               size="large"
@@ -102,7 +80,6 @@ const Home: React.FC = () => {
 
           <Divider sx={{ borderBottomWidth: 1.5 }} />
 
-          {/* 3. 煽り・説明セクション */}
           <Box sx={{ textAlign: 'center', px: 2 }}>
             <Typography variant="h4" sx={{ fontWeight: 800, mb: 4 }}>
               「脳死で無気力」な日々が、<br/>君の人生のハイライト。
@@ -131,7 +108,6 @@ const Home: React.FC = () => {
             </Button>
           </Box>
 
-          {/* 4. タグ検索風セクション */}
           <Box sx={{ pt: 4, pb: 8, textAlign: 'center' }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 3 }}>適性タグから探す</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.5 }}>
@@ -147,7 +123,6 @@ const Home: React.FC = () => {
               ))}
             </Box>
           </Box>
-
         </Stack>
       </Container>
     </GradientBackground>

@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Box } from '@mui/material'; // インポートをここに集約
+import { Box } from '@mui/material';
 import Home from './pages/home';
 import HobbyDetailPageModern from './pages/syousai';
 import Main from './pages/main';
+import SwipePage from './pages/swipe'; // 追加
 import Header from './components/header';
 import Footer from './components/footer';
 
@@ -16,7 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/syousai/:id" element={<HobbyDetailPageModern />} />
-            <Route path="/main" element={<Main />} />
+            <Route path="/swipe" element={<SwipePage />} /> {/* スワイプ専用 */}
+            <Route path="/main" element={<Main />} />   {/* 完了画面専用 */}
           </Routes>
         </Box>
         <Footer />

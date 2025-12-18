@@ -1,173 +1,161 @@
-import React, { useState, useCallback } from 'react';
-import { Container, Typography, Box, Stack, styled, IconButton, Button } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close'; 
-import FavoriteIcon from '@mui/icons-material/Favorite'; 
-import TinderCard from 'react-tinder-card';
-import { useNavigate } from 'react-router-dom';
-
-import SwipeCard from '../components/SwipeCard';
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, Box, Stack, styled, Button, CircularProgress, Divider } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AutoAwesome, RocketLaunch, ChevronRight, WorkspacePremium } from '@mui/icons-material';
 import initialHobbiesData from '../data/hobbies.json'; 
-import type { Hobby } from '../types/types'; 
 
 const ACCENT_COLOR = '#000000'; 
-const REJECT_COLOR = '#ff4d4d';
-const LIKE_COLOR = '#4caf50';
+const SYNC_PURPLE = '#d21dff';
 
 const GradientBackground = styled(Box)({
   background: `linear-gradient(135deg, #ebc8ff 0%, #f0f0f0 70%)`,
-  minHeight: '100vh',
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+  minHeight: '100vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
 });
 
-const Main = () => {
+const ResultCard = styled(Box)({
+  backgroundColor: '#ffffff',
+  borderRadius: '24px',
+  padding: '40px 24px',
+  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+  width: '100%',
+  maxWidth: '400px',
+  textAlign: 'center',
+  cursor: 'pointer',
+  transition: 'transform 0.2s ease-in-out',
+  '&:hover': { transform: 'translateY(-4px)' },
+});
+
+// 称号の定義
+const getRankInfo = (rate: number) => {
+  if (rate >= 95) return { name: "運命のシンクロ", color: "#ff1493", comment: "これ以上ない最高の相性です！" };
+  if (rate >= 90) return { name: "伝説級の相性", color: "#ff8c00", comment: "あなたのための趣味と言っても過言ではありません。" };
+  if (rate >= 80) return { name: "理想的なパートナー", color: "#32cd32", comment: "驚くほどスムーズに始められるでしょう。" };
+  if (rate >= 70) return { name: "安定のベストマッチ", color: "#1e90ff", comment: "確実な楽しみが約束されています。" };
+  return { name: "期待のニューフェイス", color: "#808080", comment: "新しい世界を覗くチャンスです。" };
+};
+
+const Main: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [matchingHobby, setMatchingHobby] = useState<any>(null);
+  const [syncRate, setSyncRate] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const getInitialHobbies = () => {
-    if (Array.isArray(initialHobbiesData)) {
-      return initialHobbiesData as unknown as Hobby[];
-    } else if (initialHobbiesData && typeof initialHobbiesData === 'object' && 'hobbies' in initialHobbiesData) {
-      // @ts-ignore
-      return initialHobbiesData.hobbies as unknown as Hobby[];
+  useEffect(() => {
+    const savedResult = sessionStorage.getItem('last_diagnostic_result');
+    const isNewDiagnosis = location.state && (location.state as any).yesIndices;
+
+    if (savedResult && !isNewDiagnosis) {
+      const parsed = JSON.parse(savedResult);
+      setMatchingHobby(parsed.hobby);
+      setSyncRate(parsed.rate);
+      setLoading(false);
+      return;
     }
-    return [];
-  };
 
-  const [hobbies] = useState<Hobby[]>(getInitialHobbies());
-  const [swiped, setSwiped] = useState<{ liked: (string | number)[], disliked: (string | number)[] }>({
-    liked: [],
-    disliked: []
-  });
-  
-  const [currentIndex, setCurrentIndex] = useState(hobbies.length - 1);
+    const calculateLogic = () => {
+      try {
+        const yesIndices: number[] = (location.state as any)?.yesIndices || [];
+        const hobbyEntries = Object.entries(initialHobbiesData);
+        
+        let bestHobby = null;
+        let maxFinalScore = -1;
 
-  // ★ 解決策1：ブラウザを強制リロードして、診断を真っさらな状態から開始する
-  const handleRestart = () => {
-    window.location.href = '/main'; 
-  };
+        const catIdx = {
+          digital: [0, 1, 2, 3, 5, 6, 7],
+          creative: [8, 9, 10, 11, 12, 13, 14, 15],
+          outdoor: [16, 17, 19, 20, 22, 23],
+          knowledge: [24, 25, 26, 27, 28, 30, 31],
+          wellbeing: [12, 18, 21, 22, 39]
+        };
 
-  // ★ 解決策2：トップページ（概要ページ）へ戻る
-  const handleGoHome = () => {
-    window.location.href = '/'; 
-  };
+        const results = hobbyEntries.map(([id, data]: [string, any]) => {
+          let score = 0;
+          const cat = data.category_id;
 
-  const onSwipe = useCallback((direction: string, hobbyId: string | number) => {
-    if (direction === 'right') {
-      setSwiped(prev => ({ ...prev, liked: [...prev.liked, hobbyId] }));
-    } else if (direction === 'left') {
-      setSwiped(prev => ({ ...prev, disliked: [...prev.disliked, hobbyId] }));
+          let targetIndices: number[] = [];
+          if (cat === 'digital_tech') targetIndices = catIdx.digital;
+          if (cat === 'creative') targetIndices = catIdx.creative;
+          if (cat === 'exploration') targetIndices = catIdx.outdoor;
+          if (cat === 'knowledge') targetIndices = catIdx.knowledge;
+          if (cat === 'wellbeing') targetIndices = catIdx.wellbeing;
+
+          const matchCount = yesIndices.filter(i => targetIndices.includes(i)).length;
+          score += (matchCount / (targetIndices.length || 1)) * 50;
+
+          if (data.cost_conditions?.initial_cost?.includes('高')) {
+            score += yesIndices.includes(32) ? 15 : -10;
+          } else { score += 10; }
+
+          if (data.cost_conditions?.location?.includes('屋外')) {
+            score += (yesIndices.includes(16) || yesIndices.includes(18)) ? 15 : -20;
+          }
+
+          if (data.social_features?.solo_play) {
+            score += yesIndices.includes(34) ? 20 : 5;
+          }
+
+          return { id, data, totalScore: score };
+        });
+
+        const winner = results.reduce((prev, curr) => (prev.totalScore > curr.totalScore) ? prev : curr);
+        const finalRate = Math.floor(Math.max(60, Math.min(98, winner.totalScore + 20)));
+
+        setMatchingHobby({ id: winner.id, ...winner.data });
+        setSyncRate(finalRate);
+        sessionStorage.setItem('last_diagnostic_result', JSON.stringify({ hobby: { id: winner.id, ...winner.data }, rate: finalRate }));
+      } catch (error) { console.error(error); } finally { setTimeout(() => setLoading(false), 2000); }
+    };
+    calculateLogic();
+  }, [location.state]);
+
+  const handleGoToDetail = () => {
+    if (matchingHobby?.id) {
+      navigate(`/syousai/${matchingHobby.id}`, { state: { syncRate: syncRate, reason: "論理計算により算出されたマッチング結果です。" } });
     }
-    setCurrentIndex(prev => prev - 1); 
-  }, []);
-
-  const handleGoToDetail = (id: string | number) => {
-    navigate(`/syousai/${String(id)}`);
   };
 
-  const isComplete = currentIndex < 0;
+  const rank = getRankInfo(syncRate);
+
+  if (loading) return (
+    <GradientBackground sx={{ justifyContent: 'center' }}>
+      <CircularProgress sx={{ color: SYNC_PURPLE }} />
+      <Typography sx={{ mt: 3, fontWeight: 800, color: '#000' }}>シンクロ率を計算中...</Typography>
+    </GradientBackground>
+  );
 
   return (
     <GradientBackground>
-      <Container maxWidth="sm" sx={{ py: 4 }}>
-        <Typography variant="h4" sx={{ fontWeight: 900, mb: 4, textAlign: 'center', color: ACCENT_COLOR }}>
-          しゅみシンクロ診断
-        </Typography>
-
-        <Box sx={{ position: 'relative', width: '100%', maxWidth: '350px', height: '520px', mx: 'auto' }}>
-          {isComplete ? (
-            <Box sx={{ 
-              p: 4, borderRadius: 8, bgcolor: 'white', textAlign: 'center',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)', height: '480px',
-              display: 'flex', flexDirection: 'column', justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              <Typography variant="h4" sx={{ mb: 2, fontWeight: 900, color: ACCENT_COLOR }}>
-                🎉 診断完了！
-              </Typography>
-              
-              <Box sx={{ fontSize: '4rem', mb: 2 }}>🎊</Box>
-
-              <Typography variant="body1" sx={{ mb: 4, color: ACCENT_COLOR, fontWeight: 500 }}>
-                気になる趣味が <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>{swiped.liked.length}</span> 件<br />
-                見つかりました！
-              </Typography>
-
-              <Stack spacing={2} sx={{ width: '100%' }}>
-                <Button 
-                  variant="contained" 
-                  fullWidth 
-                  sx={{ bgcolor: ACCENT_COLOR, color: '#fff', py: 2, borderRadius: 3, fontWeight: 'bold' }} 
-                  onClick={handleRestart} 
-                >
-                  もう一度診断する
-                </Button>
-
-                <Button 
-                  variant="outlined" 
-                  fullWidth 
-                  sx={{ color: ACCENT_COLOR, borderColor: ACCENT_COLOR, py: 1.5, borderRadius: 3, fontWeight: 'bold' }} 
-                  onClick={handleGoHome} 
-                >
-                  トップページに戻る
-                </Button>
-              </Stack>
+      <Container maxWidth="sm" sx={{ py: 6 }}>
+        <Stack spacing={4} alignItems="center">
+          <Typography variant="h4" sx={{ fontWeight: 900, color: '#000' }}>診断結果</Typography>
+          
+          <ResultCard onClick={handleGoToDetail}>
+            {/* 称号バッジの表示 */}
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, px: 2, py: 0.5, borderRadius: '20px', bgcolor: `${rank.color}15`, border: `1px solid ${rank.color}`, mb: 2 }}>
+              <WorkspacePremium sx={{ color: rank.color, fontSize: 18 }} />
+              <Typography variant="caption" sx={{ fontWeight: 900, color: rank.color, letterSpacing: 1 }}>{rank.name}</Typography>
             </Box>
-          ) : (
-            hobbies.map((hobby, index) => (
-              <TinderCard
-                key={hobby.id}
-                onSwipe={(dir) => onSwipe(dir, hobby.id)}
-                preventSwipe={['up', 'down']}
-                style={{ 
-                  position: 'absolute', 
-                  width: '100%',
-                  zIndex: index,
-                  visibility: index >= currentIndex ? 'visible' : 'hidden'
-                }}
-              >
-                <Box sx={{ position: 'relative', width: '100%' }}>
-                  <SwipeCard hobby={hobby} />
-                  {index === currentIndex && (
-                    <Button
-                      variant="contained"
-                      onClick={(e) => {
-                        e.stopPropagation(); 
-                        handleGoToDetail(hobby.id);
-                      }}
-                      sx={{ 
-                        position: 'absolute', bottom: 30, left: '50%', transform: 'translateX(-50%)',
-                        bgcolor: 'rgba(0,0,0,0.7)', color: '#fff', borderRadius: 2, px: 3,
-                        fontWeight: 'bold', zIndex: 10, backdropFilter: 'blur(4px)',
-                        '&:hover': { bgcolor: 'rgba(0,0,0,0.9)' }
-                      }}
-                    >
-                      詳しく見る
-                    </Button>
-                  )}
-                </Box>
-              </TinderCard>
-            )).reverse()
-          )}
-        </Box>
 
-        {!isComplete && (
-            <Stack direction="row" spacing={6} justifyContent="center" sx={{ mt: 2 }}>
-                <IconButton 
-                  onClick={() => onSwipe('left', hobbies[currentIndex]?.id)} 
-                  sx={{ bgcolor: '#fff', p: 2, boxShadow: '0 5px 15px rgba(0,0,0,0.1)' }}
-                >
-                  <CloseIcon sx={{ fontSize: 35, color: REJECT_COLOR }} />
-                </IconButton>
-                <IconButton 
-                  onClick={() => onSwipe('right', hobbies[currentIndex]?.id)} 
-                  sx={{ bgcolor: '#fff', p: 2, boxShadow: '0 5px 15px rgba(0,0,0,0.1)' }}
-                >
-                  <FavoriteIcon sx={{ fontSize: 35, color: LIKE_COLOR }} />
-                </IconButton>
-            </Stack>
-        )}
+            <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, color: '#000' }}>{matchingHobby?.name_ja}</Typography>
+            <Divider sx={{ my: 1, width: '40px', height: '4px', bgcolor: SYNC_PURPLE, mx: 'auto' }} />
+            
+            <Typography variant="h1" sx={{ fontWeight: 900, fontSize: '5.5rem', color: '#000', lineHeight: 1 }}>{syncRate}<span style={{ fontSize: '2rem' }}>%</span></Typography>
+            <Typography variant="body2" sx={{ color: rank.color, fontWeight: 800, mb: 3 }}>{rank.comment}</Typography>
+            
+            <Box sx={{ p: 3, borderRadius: 4, bgcolor: '#f1f3f5', textAlign: 'left', mb: 2 }}>
+              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                <RocketLaunch sx={{ color: SYNC_PURPLE, fontSize: 18 }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 900, color: '#000' }}>高専生へのメッセージ</Typography>
+              </Stack>
+              <Typography variant="body2" sx={{ color: '#333', fontWeight: 500, lineHeight: 1.6 }}>{matchingHobby?.recommendation?.kosen_suitability}</Typography>
+            </Box>
+            
+            <Typography variant="button" sx={{ color: SYNC_PURPLE, fontWeight: 800 }}>詳細をチェックする ➔</Typography>
+          </ResultCard>
+
+          <Button variant="outlined" fullWidth onClick={() => navigate('/')} sx={{ color: '#000', borderColor: '#000', py: 1.5, borderRadius: 3, fontWeight: 'bold' }}>ホームに戻る</Button>
+        </Stack>
       </Container>
     </GradientBackground>
   );
