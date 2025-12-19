@@ -1,123 +1,194 @@
-import React, { useState, useRef, useMemo, } from "react";
-import {Box,} from '@mui/material';
-import type { FC } from "react";
-// @ts-ignore
-import TinderCardImport from "react-tinder-card";
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, Box, Stack, styled, Button, CircularProgress, Divider } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AutoAwesome, RocketLaunch, ChevronRight, WorkspacePremium } from '@mui/icons-material';
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
+import initialHobbiesData from '../data/hobbies.json'; 
 
-const TinderCard: any = TinderCardImport;
+const ACCENT_COLOR = '#000000'; 
+const SYNC_PURPLE = '#d21dff';
 
-const DUMMY_DATA = [
-  { name: "おしゃれな猫", description: "都会に住むスタイリッシュな猫の日常。", Category: "猫", catchPhrase: "猫の視点から見た世界。", cost: "1500円/月", images: ["https://placekitten.com/500/280"] },
-  { name: "森のリス", description: "冬眠に備えて一生懸命に木の実を蓄えています。", Category: "リス", catchPhrase: "貯蓄のプロフェッショナル。", cost: "2000円（どんぐり代）", images: ["https://placedog.net/500/280?id=2"] },
-  { name: "草原のウサギ", description: "広い草原を自由に駆け回る元気なウサギ。", Category: "ウサギ", catchPhrase: "スピードこそが正義。", cost: "2500円", images: ["https://placedog.net/500/280?id=3"] },
-  { name: "UI/UXデザイン", description: "使い勝手の良いインターフェースを設計します。", Category: "デザイン", catchPhrase: "純粋な論理で『使いやすさ』をハックする。", cost: "ほぼゼロ（Figma無料、既存PC）", images: ["https://liginc.co.jp/wp-content/uploads/2018/08/eyecatch-1310x874.jpg"] },
-];
+const GradientBackground = styled(Box)({
+  background: `linear-gradient(135deg, #ebc8ff 0%, #f0f0f0 70%)`,
+  minHeight: '100vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
+});
 
-const TinderSwipe: FC = () => {
-  const db = DUMMY_DATA;
-  const [lastDirection, setLastDirection] = useState<string>();
-  const [currentIndex, setCurrentIndex] = useState<number>(db.length - 1);
-  const currentIndexRef = useRef(currentIndex);
+const ResultCard = styled(Box)({
+  backgroundColor: '#ffffff',
+  borderRadius: '24px',
+  padding: '40px 24px',
+  boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+  width: '100%',
+  maxWidth: '400px',
+  textAlign: 'center',
+  cursor: 'pointer',
+  transition: 'transform 0.2s ease-in-out',
+  position: 'relative',
+  zIndex: 1,
+  '&:hover': { transform: 'translateY(-4px)' },
+});
 
-  const childRefs = useMemo<any>(
-    () =>
-      Array(db.length)
-        .fill(0)
-        .map(() => React.createRef()),
-    [db.length]
-  );
+const getRankInfo = (rate: number) => {
+  if (rate >= 95) return { name: "運命のシンクロ", color: "#ff1493", comment: "これ以上ない最高の相性です！" };
+  if (rate >= 90) return { name: "伝説級の相性", color: "#ff8c00", comment: "あなたのための趣味と言っても過言ではありません。" };
+  if (rate >= 80) return { name: "理想的なパートナー", color: "#32cd32", comment: "驚くほどスムーズに始められるでしょう。" };
+  if (rate >= 70) return { name: "安定のベストマッチ", color: "#1e90ff", comment: "確実な楽しみが約束されています。" };
+  return { name: "期待のニューフェイス", color: "#808080", comment: "新しい世界を覗くチャンスです。" };
+};
 
-  const updateCurrentIndex = (val: number) => {
-    setCurrentIndex(val);
-    currentIndexRef.current = val;
-  };
+const Main: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { width, height } = useWindowSize();
+  const [matchingHobby, setMatchingHobby] = useState<any>(null);
+  const [syncRate, setSyncRate] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);
 
-  const swiped = (direction: string, index: number) => {
-    setLastDirection(direction);
-    updateCurrentIndex(index - 1);
-  };
+  useEffect(() => {
+    const savedResult = sessionStorage.getItem('last_diagnostic_result');
+    const isNewDiagnosis = location.state && (location.state as any).yesIndices;
 
-  const outOfFrame = (idx: number) => {
-    console.log(`${idx} left the screen`);
-  };
+    if (savedResult && !isNewDiagnosis) {
+      const parsed = JSON.parse(savedResult);
+      setMatchingHobby(parsed.hobby);
+      setSyncRate(parsed.rate);
+      setLoading(false);
+      if (parsed.rate >= 95) setShowConfetti(true);
+      return;
+    }
 
-  const swipe = async (direction: string) => {
-    if (currentIndex >= 0 && currentIndex < db.length) {
-      await childRefs[currentIndex].current.swipe(direction);
+    const calculateLogic = () => {
+      try {
+        const yesIndices: number[] = (location.state as any)?.yesIndices || [];
+        const hobbyEntries = Object.entries(initialHobbiesData);
+        
+        // --- 厳選20問に基づいたカテゴリ定義 ---
+        const catIdx = {
+          digital: [0, 1, 2, 3],     // テクノロジー
+          creative: [4, 5, 6, 7],    // クリエイティブ
+          outdoor: [8, 9, 10, 11],   // アウトドア
+          knowledge: [12, 13, 14, 15] // 知的好奇心
+          // 16-19 は環境フィルタとして使用
+        };
+
+        const results = hobbyEntries.map(([id, data]: [string, any]) => {
+          let score = 0;
+          const cat = data.category_id;
+
+          // 1. カテゴリ適性 (最大 50点)
+          let targetIndices: number[] = [];
+          if (cat === 'digital_tech') targetIndices = catIdx.digital;
+          if (cat === 'creative') targetIndices = catIdx.creative;
+          if (cat === 'exploration') targetIndices = catIdx.outdoor;
+          if (cat === 'knowledge') targetIndices = catIdx.knowledge;
+          if (cat === 'wellbeing') targetIndices = [10, 11, 18]; // 運動・自然・健康
+
+          const matchCount = yesIndices.filter(i => targetIndices.includes(i)).length;
+          score += (matchCount / (targetIndices.length || 1)) * 50;
+
+          // 2. 環境適合度 (最大 30点)
+          // コスト: Q17 (index 16)
+          if (data.cost_conditions?.initial_cost?.includes('高')) {
+            score += yesIndices.includes(16) ? 15 : -10;
+          } else {
+            score += 10;
+          }
+          // 場所: Q9 (index 8), Q10 (index 9)
+          if (data.cost_conditions?.location?.includes('屋外')) {
+            score += (yesIndices.includes(8) || yesIndices.includes(9)) ? 15 : -20;
+          }
+
+          // 3. 性格適合 (最大 20点)
+          // ソロプレイ: Q19 (index 18)
+          if (data.social_features?.solo_play) {
+            score += yesIndices.includes(18) ? 20 : 5;
+          }
+
+          return { id, data, totalScore: score };
+        });
+
+        const winner = results.reduce((prev, curr) => (prev.totalScore > curr.totalScore) ? prev : curr);
+        
+        // 20問用に正規化 (基礎点 + 回答割合による補正)
+        const finalRate = Math.floor(Math.max(60, Math.min(98, winner.totalScore + 20)));
+
+        setMatchingHobby({ id: winner.id, ...winner.data });
+        setSyncRate(finalRate);
+        
+        if (finalRate >= 95) setShowConfetti(true);
+
+        sessionStorage.setItem('last_diagnostic_result', JSON.stringify({ 
+          hobby: { id: winner.id, ...winner.data }, 
+          rate: finalRate 
+        }));
+
+      } catch (error) {
+        console.error("Calculation Error:", error);
+      } finally {
+        setTimeout(() => setLoading(false), 2000);
+      }
+    };
+
+    calculateLogic();
+  }, [location.state]);
+
+  const handleGoToDetail = () => {
+    if (matchingHobby?.id) {
+      navigate(`/syousai/${matchingHobby.id}`, { 
+        state: { syncRate: syncRate, reason: "20の質問から導き出されたあなたの最適解です。" } 
+      });
     }
   };
 
-  const goBack = async () => {
-    if (currentIndex >= db.length - 1) return;
-    const newIndex = currentIndex + 1;
-    updateCurrentIndex(newIndex);
-    await childRefs[newIndex].current.restoreCard();
-  };
+  const rank = getRankInfo(syncRate);
+
+  if (loading) return (
+    <GradientBackground sx={{ justifyContent: 'center' }}>
+      <CircularProgress sx={{ color: SYNC_PURPLE }} />
+      <Typography sx={{ mt: 3, fontWeight: 800, color: '#000' }}>分析中...</Typography>
+    </GradientBackground>
+  );
 
   return (
-    <div style={styles.container}>
-      <Box sx={{mt: -10}}/>
-      <div style={styles.cardContainer}>
-        {db.map((character, index) => (
-          <TinderCard
-            ref={childRefs[index]}
-            className="swipe"
-            key={character.name}
-            onSwipe={(dir: string) => swiped(dir, index)}
-            onCardLeftScreen={() => outOfFrame(index)}
-            preventSwipe={['up', 'down']}
-          >
-            <div
-              style={{
-                ...styles.card,
-                backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%), url(${character.images[0]})`,
-                zIndex: index, 
-              }}
-            >
-              <div style={styles.textContainer}>
-                <span style={styles.categoryBadge}>{character.Category}</span>
-                <h3 style={styles.cardTitle}>{character.name}</h3>
-                <p style={styles.catchPhrase}>{character.catchPhrase}</p>
-                <div style={styles.details}>
-                  <p style={styles.description}>{character.description}</p>
-                  <p style={styles.costText}><strong>コスト:</strong> {character.cost}</p>
-                </div>
-              </div>
-            </div>
-          </TinderCard>
-        ))}
-      </div>
+    <GradientBackground>
+      {showConfetti && <Confetti width={width} height={height} recycle={false} numberOfPieces={500} gravity={0.2} colors={['#ff1493', '#ff69b4', '#d21dff', '#ffffff']} />}
 
-      <div style={styles.buttonContainer}>
-        <button style={styles.button} onClick={() => swipe("left")}>👎</button>
-        <button style={styles.button} onClick={() => goBack()}>戻す</button>
-        <button style={styles.button} onClick={() => swipe("right")}>👍</button>
-      </div>
+      <Container maxWidth="sm" sx={{ py: 6 }}>
+        <Stack spacing={4} alignItems="center">
+          <Typography variant="h4" sx={{ fontWeight: 900, color: '#000' }}>診断結果</Typography>
+          
+          <ResultCard onClick={handleGoToDetail}>
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, px: 2, py: 0.5, borderRadius: '20px', bgcolor: `${rank.color}15`, border: `2px solid ${rank.color}`, mb: 2 }}>
+              <WorkspacePremium sx={{ color: rank.color, fontSize: 18 }} />
+              <Typography variant="caption" sx={{ fontWeight: 900, color: rank.color, letterSpacing: 1 }}>{rank.name}</Typography>
+            </Box>
 
-      <div style={styles.infoContainer}>
-        {lastDirection ? <p style={styles.infoText}>判定: {lastDirection === 'right' ? 'お気に入り' : 'スキップ'}</p> : <p style={styles.infoText}>左右にスワイプ！</p>}
-        {currentIndex < 0 && <strong style={{color: '#ff4d4f'}}>すべてのカードをチェックしました！</strong>}
-      </div>
-      <Box sx={{mb: -10}}/>
-    </div>
+            <Typography variant="h4" sx={{ fontWeight: 900, mb: 2, color: '#000' }}>{matchingHobby?.name_ja}</Typography>
+            <Divider sx={{ my: 1, width: '40px', height: '4px', bgcolor: SYNC_PURPLE, mx: 'auto' }} />
+            
+            <Typography variant="h1" sx={{ fontWeight: 900, fontSize: '5.5rem', color: '#000', lineHeight: 1 }}>
+              {syncRate}<span style={{ fontSize: '2rem' }}>%</span>
+            </Typography>
+            <Typography variant="body2" sx={{ color: rank.color, fontWeight: 800, mb: 3 }}>{rank.comment}</Typography>
+            
+            <Box sx={{ p: 3, borderRadius: 4, bgcolor: '#f1f3f5', textAlign: 'left', mb: 2 }}>
+              <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
+                <RocketLaunch sx={{ color: SYNC_PURPLE, fontSize: 18 }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 900, color: '#000' }}>高専生へのメッセージ</Typography>
+              </Stack>
+              <Typography variant="body2" sx={{ color: '#333', fontWeight: 500, lineHeight: 1.6 }}>{matchingHobby?.recommendation?.kosen_suitability}</Typography>
+            </Box>
+            
+            <Typography variant="button" sx={{ color: SYNC_PURPLE, fontWeight: 800 }}>詳細をチェックする ➔</Typography>
+          </ResultCard>
+
+          <Button variant="outlined" fullWidth onClick={() => navigate('/')} sx={{ color: '#000', borderColor: '#000', py: 1.5, borderRadius: 3, fontWeight: 'bold' }}>ホームに戻る</Button>
+        </Stack>
+      </Container>
+    </GradientBackground>
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100vh', overflow: 'hidden', backgroundColor: '#f8f9fa', fontFamily: '"Helvetica Neue", Arial, sans-serif' },
-  cardContainer: { position: 'relative', width: '105vw', height: '150vw' },
-  card: { position: 'absolute', width: '105vw', height: '150vw', backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '15px', boxShadow: '0px 15px 35px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'flex-end', boxSizing: 'border-box', backgroundColor: '#fff', overflow: 'hidden' },
-  textContainer: { padding: '20px', color: '#fff', width: '100%', boxSizing: 'border-box' },
-  categoryBadge: { backgroundColor: '#d21dffff', color: '#fff', padding: '4px 10px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold', marginBottom: '8px', display: 'inline-block' },
-  cardTitle: { fontSize: '40px', margin: '0 0 5px 0', fontWeight: 'bold' },
-  catchPhrase: { fontSize: '16px', margin: '0 0 15px 0', color: '#e0e0e0', fontStyle: 'italic' },
-  details: { borderTop: '1px solid rgba(255,255,255,0.3)', paddingTop: '10px' },
-  description: { fontSize: '13px', margin: '0 0 8px 0', lineHeight: '1.4' },
-  costText: { fontSize: '13px', margin: 0, color: '#ffd700' },
-  buttonContainer: { marginTop: '30px', display: 'flex', gap: '15px', zIndex: 1000 },
-  button: { width: '70px', height: '50px', borderRadius: '25px', border: 'none', backgroundColor: '#fff', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0px 4px 10px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.1s' },
-  infoContainer: { marginTop: '20px', textAlign: 'center', minHeight: '60px' },
-  infoText: { color: '#888', fontSize: '14px' }
-};
-
-export default TinderSwipe;
+export default Main;

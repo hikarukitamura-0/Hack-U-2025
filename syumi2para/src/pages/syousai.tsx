@@ -1,248 +1,236 @@
-import React from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Container,
-  Stack,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Chip,
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { db } from '../firebase'; 
+import { doc, getDoc } from "firebase/firestore";
+import { 
+  Box, Typography, Button, Container, Stack, Divider, 
+  CircularProgress, Paper, Chip 
 } from '@mui/material';
-import {
-  Palette,
-  Code,
-  AttachMoney,
-  AccessTime,
-  RocketLaunch,
-  Lightbulb,
+import { 
+  AttachMoney, AccessTime, LocationOn, AutoAwesome, 
+  Psychology, PlayCircleFilled, ListAlt 
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Link as RouterLink } from "react-router-dom";
 
-// カスタムカラー定義 (元のスタイルを踏襲しつつ、主にアクセントに使用)
-const ACCENT_COLOR = '#000000ff'; // メインカラー（ブラック）
-const HOVER_COLOR = '#d21dffff';  // アクセントカラー（マゼンタ/パープル）
+export const ACCENT_COLOR = '#000000';
+const HOVER_COLOR = '#d21dff';
 
-// 1. クリーンな背景スタイル
-const CleanBackground = styled(Box)(({ theme }) => ({
-  // 背景を純粋な白に設定し、洗練された印象に
-  background: theme.palette.mode === 'dark' ? '#121212' : '#ffffff', 
+const CleanBackground = styled(Box)({
+  background: '#ffffff',
   minHeight: '100vh',
-  padding: theme.spacing(4, 0), 
-}));
+  padding: '40px 0',
+  color: '#000000',
+});
 
-// 2. セクションタイトルのスタイル (モダンでシャープなデザイン)
-const SectionTitleStyle = {
-  fontWeight: 800,
-  fontSize: '1.8rem', // 大きめのフォントでインパクトを出す
-  mt: 6, 
-  mb: 1, // タイトルとサブ要素の距離を詰める
-  color: ACCENT_COLOR,
-};
-
-// 3. データカードの基盤スタイル (影や枠線を排除し、余白で区切る)
-const DataBoxStyle = {
-  py: 2,
-  px: 0,
-  borderBottom: '1px solid #eee', // 軽い罫線で区切りを設ける
-};
-
-// 4. 移動時にページ最上部からスタート
   const Top = () => {
     window.scrollTo({
       top: 0,
     });
   };
 
-// 趣味紹介データの定義
-const hobbyData = {
-  name: "UI/UXデザイン",
-  icon: <Palette sx={{ fontSize: 60, color: ACCENT_COLOR }} />,
-  tagline: "純粋な論理で『使いやすさ』をハックする。",
-  overview: [
-    { label: "得られるスキル", value: "論理思考, 問題解決, Figma操作, ユーザー分析", icon: <Code /> },
-    { label: "高専との相性", value: "最高。プログラミング知識が、理想的なインターフェース設計に直結。", icon: <RocketLaunch /> },
-    { label: "始める理由", value: "君の『不満』を、世界で通用する価値に変えられる。", icon: <Lightbulb /> },
-  ],
-  conditions: [
-    { label: "初期費用", value: "ほぼゼロ（Figma無料、既存PC）", icon: <AttachMoney /> },
-    { label: "活動場所", value: "インターネット環境があればどこでも", icon: <Code /> },
-    { label: "時間効率", value: "短時間から始められ、ポートフォリオに直結", icon: <AccessTime /> },
-  ],
-  steps: [
-    "Figmaを開く。まずはスマホの『電卓アプリ』を丸ごと模写し、ツールの感覚を掴む。",
-    "高専の学内システムなど、身近な『不便』を一つ選び、どう改善できるかアイデアスケッチをする。",
-    "アイデアをFigmaで簡単なワイヤーフレーム（骨組み）に起こし、プロトタイプとして動かしてみる。",
-  ],
-};
-
 const HobbyDetailPageModern: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+  const [hobbyData, setHobbyData] = useState<any>(null);
+
+  // 1. 遷移元（Main/Itiran/FinalMatch）から渡された数値と理由を優先取得
+  const [displayRate, setDisplayRate] = useState<number>((location.state as any)?.syncRate || 0);
+  const [syncReason, setSyncReason] = useState<string>(
+    (location.state as any)?.reason || "20の質問から導き出されたあなたの最適解です。"
+  );
+
+  // 2. ユーザーの回答(yesIndices)を復元（直接アクセス時の再計算用）
+  const yesIndices: number[] = useMemo(() => {
+    const stateIndices = (location.state as any)?.yesIndices;
+    if (stateIndices) return stateIndices;
+    const saved = localStorage.getItem('user_yes_indices');
+    return saved ? JSON.parse(saved) : [];
+  }, [location.state]);
+
+  // 3. マッチング計算ロジック（バックアップ用）
+  const calculateRate = useCallback((hData: any, answers: number[]) => {
+    if (!answers || answers.length === 0) return 60;
+    const catIdx = {
+      digital: [0, 1, 2, 3], creative: [4, 5, 6, 7],
+      outdoor: [8, 9, 10, 11], knowledge: [12, 13, 14, 15]
+    };
+    let score = 0;
+    const cat = hData.category_id;
+    let targetIndices: number[] = [];
+    if (cat === 'digital_tech') targetIndices = catIdx.digital;
+    if (cat === 'creative') targetIndices = catIdx.creative;
+    if (cat === 'exploration') targetIndices = catIdx.outdoor;
+    if (cat === 'knowledge') targetIndices = catIdx.knowledge;
+    if (cat === 'wellbeing') targetIndices = [10, 11, 18];
+
+    const matchCount = answers.filter(i => targetIndices.includes(i)).length;
+    score += (matchCount / (targetIndices.length || 1)) * 50;
+    if (hData.cost_conditions?.initial_cost?.includes('高')) score += answers.includes(16) ? 15 : -10; else score += 10;
+    if (hData.cost_conditions?.location?.includes('屋外')) score += (answers.includes(8) || answers.includes(9)) ? 15 : -20;
+    if (hData.social_features?.solo_play) score += answers.includes(18) ? 20 : 5;
+    return Math.floor(Math.max(60, Math.min(98, score + 20)));
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const docRef = doc(db, "hobbies", id);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setHobbyData(data);
+          
+          // FinalMatch等からの上書きデータがあるか確認
+          const stateData = location.state as any;
+          if (stateData?.syncRate) {
+            setDisplayRate(stateData.syncRate);
+            if (stateData.reason) setSyncReason(stateData.reason);
+          } else if (displayRate === 0) {
+            // データが渡されていない場合のみ、このページで計算
+            setDisplayRate(calculateRate(data, yesIndices));
+          }
+        }
+      } catch (error) {
+        console.error("Firebase Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+    window.scrollTo(0, 0); 
+  }, [id, yesIndices, calculateRate, displayRate, location.state]);
+
+  if (loading) return (
+    <CleanBackground sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <CircularProgress sx={{ color: HOVER_COLOR }} />
+    </CleanBackground>
+  );
+
+  if (!hobbyData) return (
+    <Container sx={{ py: 10, textAlign: 'center' }}>
+      <Typography variant="h5">データが見つかりません</Typography>
+      <Button onClick={() => navigate('/itiran')} sx={{ mt: 2 }}>一覧へ戻る</Button>
+    </Container>
+  );
+
   return (
     <CleanBackground>
-      {/* ContainerをmaxWidth="sm"に戻し、スマホでは適度な余白を確保 */}
-      <Container maxWidth="sm" sx={{ p: { xs: 3, sm: 4 } }}> 
-        <Stack spacing={8}>
-          
-          {/* 1. タイトル＆キャッチフレーズ (Minimal Header) */}
-          <Box sx={{ textAlign: 'center', pt: 2 }}>
-            {hobbyData.icon}
-            <Typography variant="h3" component="h1" sx={{ fontWeight: 900, color: ACCENT_COLOR, mt: 1, mb: 0.5 }}>
-              {hobbyData.name}
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 400, color: 'text.secondary', lineHeight: 1.8 }}>
-              {hobbyData.tagline}
-            </Typography>
-            <Divider sx={{ bgcolor: ACCENT_COLOR, height: '1px', width: '30%', mx: 'auto', mt: 3 }} />
-          </Box>
-
-          {/* 2. メインCTA (余白を多く取り、目立たせる) */}
+      <Container maxWidth="sm">
+        <Stack spacing={4}>
+          {/* タイトル */}
           <Box sx={{ textAlign: 'center' }}>
-            <Button
-              variant="contained"
-              size="large"
-              startIcon={<FavoriteBorderIcon />}
-              component={RouterLink}
-              onClick={Top}
-              to="/aisyou"
-              sx={{ 
-                width: { xs: '100%', sm: '80%' }, // スマホで幅いっぱいに
-                py: 2, 
-                fontWeight: 700, 
-                borderRadius: 4, 
-                backgroundColor: ACCENT_COLOR,
-                '&:hover': {
-                  backgroundColor: HOVER_COLOR, // アクセントカラーはホバー時のみ
-                }
-              }}
-            >
-              いますぐ趣味との相性を知る
-            </Button>
+            <Typography variant="h3" sx={{ fontWeight: 900, wordBreak: 'break-word' }}>
+              {hobbyData.name_ja}
+            </Typography>
+            <Divider sx={{ width: '60px', height: '4px', bgcolor: HOVER_COLOR, mx: 'auto', mt: 2, borderRadius: 2 }} />
           </Box>
-          
-          {/* 3. 概要セクション (すっきりとしたリスト形式) */}
-          <Box>
-            <Typography variant="h4" sx={SectionTitleStyle}>
-              おススメポイント
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              UI/UXデザインは、論理と創造性が交差する領域です。
-            </Typography>
 
-            <Stack spacing={0}>
-              {hobbyData.overview.map((item, index) => (
-                <Box key={index} sx={DataBoxStyle}>
-                  <Stack direction="row" alignItems="flex-start" spacing={1}>
-                    <ListItemIcon sx={{ color: HOVER_COLOR, minWidth: 30, mt: 0.5 }}>
-                        {item.icon}
-                    </ListItemIcon>
-                    <Box>
-                        <Typography variant="subtitle1" fontWeight={700} color={ACCENT_COLOR}>
-                            {item.label}
-                        </Typography>
-                        <Typography variant="body2" color="text.primary" sx={{ lineHeight: 1.6, mt: 0.5 }}>
-                            {item.value}
-                        </Typography>
-                    </Box>
-                  </Stack>
-                </Box>
-              ))}
+          {/* シンクロ率カード */}
+          <Box sx={{ p: 4, borderRadius: 6, textAlign: 'center', bgcolor: '#fbf5ff', border: `1px solid ${HOVER_COLOR}20` }}>
+            <Stack direction="row" justifyContent="center" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+              <AutoAwesome sx={{ color: HOVER_COLOR, fontSize: 18 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 800, color: HOVER_COLOR }}>SYNC ANALYSIS</Typography>
             </Stack>
+            <Typography variant="h1" sx={{ fontWeight: 900, lineHeight: 1 }}>{displayRate}%</Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary', mt: 2, fontWeight: 700 }}>
+               {syncReason}
+            </Typography>
           </Box>
-          
-          {/* 4. コストと条件 (シンプルなキーバリュー表示) */}
-          <Box>
-            <Typography variant="h4" sx={SectionTitleStyle}>
-              コストと活動条件
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              最小限の投資で、最大限のスキルアップを目指せます。
-            </Typography>
 
-            <Stack spacing={0}>
-              {hobbyData.conditions.map((row, index) => (
-                <Box key={index} sx={DataBoxStyle}>
-                  <Stack direction="row" justifyContent="space-between" alignItems="center">
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                      <ListItemIcon sx={{ minWidth: 30, color: HOVER_COLOR }}>{row.icon}</ListItemIcon>
-                      <Typography variant="body1" fontWeight={600} color={ACCENT_COLOR}>
-                        {row.label}
-                      </Typography>
-                    </Stack>
-                    <Typography variant="body1" fontWeight={500} color="text.primary">
-                      {row.value}
-                    </Typography>
-                  </Stack>
-                </Box>
+          {/* 活動条件 */}
+          <Box>
+            <Typography variant="h6" sx={{ fontWeight: 800, mb: 2 }}>活動条件</Typography>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
+              {[
+                { label: '初期費用', value: hobbyData.cost_conditions?.initial_cost, icon: <AttachMoney /> },
+                { label: '所要時間', value: hobbyData.cost_conditions?.time_required, icon: <AccessTime /> },
+                { label: '場所', value: hobbyData.cost_conditions?.location, icon: <LocationOn /> }
+              ].map((item, i) => (
+                <Paper key={i} sx={{ p: 2, flex: 1, textAlign: 'center', borderRadius: 4, bgcolor: '#f8f9fa' }} elevation={0}>
+                  <Box sx={{ color: HOVER_COLOR }}>{item.icon}</Box>
+                  <Typography variant="caption" display="block" color="text.secondary">{item.label}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 800 }}>{item.value || '不明'}</Typography>
+                </Paper>
               ))}
             </Stack>
           </Box>
 
-          {/* 5. ファーストステップ (番号とチップでシンプルに) */}
-          <Box>
-            <Typography variant="h4" sx={SectionTitleStyle}>
-              ファーストステップ
+          {/* 高専生との関連性 */}
+          <Box sx={{ p: 3, borderRadius: 4, bgcolor: '#000', color: '#fff' }}>
+            <Typography variant="h6" sx={{ fontWeight: 800, mb: 1 }}>高専生との関連性</Typography>
+            <Typography variant="body1" sx={{ opacity: 0.9 }}>
+              {hobbyData.recommendation?.kosen_suitability}
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              惰性を捨て、このシンプルなステップで行動を変えよう。
-            </Typography>
-            
-            <List disablePadding>
-              {hobbyData.steps.map((step, index) => (
-                <ListItem key={index} disableGutters sx={{ alignItems: 'flex-start', mb: 3 }}>
-                  <Chip
-                      label={`0${index + 1}`}
-                      size="medium"
-                      sx={{ 
-                          fontWeight: 700, 
-                          // 背景は白、枠線で強調
-                          backgroundColor: '#ffffff', 
-                          color: ACCENT_COLOR,
-                          border: `1px solid ${ACCENT_COLOR}`,
-                          mr: 2, 
-                          mt: 0.5
-                      }}
-                  />
-                  <ListItemText primary={step} primaryTypographyProps={{ fontWeight: 500, lineHeight: 1.7 }} />
-                </ListItem>
-              ))}
-            </List>
           </Box>
-          
-          {/* 6. 最後のCTA (底部) */}
-          <Box sx={{ textAlign: 'center', pb: 4 }}>
-            <Button
-              variant="outlined"
-              size="large"
-              endIcon={<FavoriteBorderIcon />}
-              component={RouterLink}
-              onClick={Top}
-              to="/aisyou"
-              sx={{ 
-                width: '90%', 
-                py: 1.5,
-                fontWeight: 600, 
-                borderRadius: 4, 
-                color: ACCENT_COLOR,
-                borderColor: ACCENT_COLOR,
-                '&:hover': {
-                  backgroundColor: `${ACCENT_COLOR}10`, // 薄いホバー効果
-                  borderColor: ACCENT_COLOR,
-                }
-              }}
+
+          {/* 始めるきっかけ */}
+          <Box>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+              <PlayCircleFilled sx={{ color: HOVER_COLOR }} />
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>始めるきっかけ</Typography>
+            </Stack>
+            <Typography variant="body1" sx={{ p: 2, bgcolor: '#f8f9fa', borderRadius: 3, borderLeft: `4px solid ${HOVER_COLOR}`, whiteSpace: 'pre-wrap' }}>
+              {hobbyData.recommendation?.reason_to_start || "新しい挑戦として始めてみましょう。"}
+            </Typography>
+          </Box>
+
+          {/* 必要なスキル */}
+          <Box>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 2 }}>
+              <Psychology sx={{ color: HOVER_COLOR }} />
+              <Typography variant="h6" sx={{ fontWeight: 800 }}>必要なスキル</Typography>
+            </Stack>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {Array.isArray(hobbyData.recommendation?.skills) ? (
+                hobbyData.recommendation.skills.map((skill: string, i: number) => (
+                  <Chip key={i} label={skill} sx={{ fontWeight: 600, bgcolor: '#f1f3f5' }} />
+                ))
+              ) : (
+                <Typography variant="body2" sx={{ p: 2, bgcolor: '#f8f9fa', borderRadius: 3 }}>
+                  {hobbyData.recommendation?.skills || "特別なスキルは必要ありません。"}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          {/* 一覧ページへの誘導バナー */}
+          <Box sx={{ mt: 2, p: 3, borderRadius: 4, textAlign: 'center', border: `2px dashed ${HOVER_COLOR}40`, bgcolor: '#fafafa' }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 2 }}>
+              他にもあなたに合う候補が19個あります
+            </Typography>
+            <Button 
+              variant="outlined" 
+              fullWidth 
+              startIcon={<ListAlt />}
+            onClick={() => {
+              Top(); // 1. Top関数を実行
+              navigate('/finalmatch', { state: { yesIndices } }); // 2. ページ遷移を実行
+            }}
+              sx={{ color: HOVER_COLOR, borderColor: HOVER_COLOR, py: 1.5, fontWeight: 'bold', borderRadius: 3, '&:hover': { borderColor: HOVER_COLOR, bgcolor: '#f3e5f5' } }}
             >
-              趣味との相性を知る
+              スワイプで他のおすすめの趣味見る
             </Button>
           </Box>
-          
+
+          {/* 戻るボタン */}
+          <Box sx={{ pt: 2, pb: 6 }}>
+            <Button 
+              variant="contained" 
+              fullWidth
+              onClick={() => navigate('/main')} 
+              sx={{ bgcolor: ACCENT_COLOR, py: 2, borderRadius: 10, fontWeight: 'bold', '&:hover': { bgcolor: '#333' } }}
+            >
+              診断結果画面に戻る
+            </Button>
+          </Box>
         </Stack>
       </Container>
     </CleanBackground>
   );
 };
-
 export default HobbyDetailPageModern;

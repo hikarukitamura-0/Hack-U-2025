@@ -18,7 +18,7 @@ import {
 } from '@mui/icons-material';
 import logo from '../assets/logo_main.png';
 import lets from '../assets/lets_modan.png';
-
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -70,6 +70,13 @@ const hobbyCategories = [
 ];
 
 const Home: React.FC = () => {
+
+  const navigate = useNavigate();
+
+  // ★ 修正ポイント：遷移先を /swipe に変更
+  const startDiagnosis = () => {
+    navigate('/swipe');
+  };
 
   return (
     <GradientBackground>
@@ -127,17 +134,11 @@ const Home: React.FC = () => {
               variant="contained"
               size="large"
               startIcon={<AutoAwesome />}
-              onClick={() => console.log('スワイプ開始')} 
+              onClick={startDiagnosis} 
               sx={{ 
-                py: 2, 
-                px: 6,
-                my: 2,
-                fontWeight: 700, 
-                borderRadius: 4, 
-                backgroundColor: ACCENT_COLOR,
-                '&:hover': {
-                  backgroundColor: HOVER_COLOR,
-                }
+                py: 2, px: 6, fontWeight: 700, borderRadius: 10, 
+                backgroundColor: ACCENT_COLOR, color: '#fff',
+                '&:hover': { backgroundColor: HOVER_COLOR }
               }}
             >
               しゅみシンクロ診断を始める
@@ -281,21 +282,14 @@ const Home: React.FC = () => {
             <Button
               variant="contained"
               size="large"
-              startIcon={<AutoAwesome />}
-              onClick={() => console.log('スワイプ開始')} 
+              onClick={startDiagnosis} 
               sx={{ 
-                py: 2, 
-                px: 6,
-                my: 2,
-                fontWeight: 700, 
-                borderRadius: 4, 
+                py: 2, px: 6, fontWeight: 700, borderRadius: 10, 
                 backgroundColor: ACCENT_COLOR,
-                '&:hover': {
-                  backgroundColor: HOVER_COLOR,
-                }
+                '&:hover': { backgroundColor: HOVER_COLOR }
               }}
             >
-              言い訳を捨てて、<br/>しゅみシンクロ診断を始める
+              言い訳を捨てて、診断を始める
             </Button>
 
           </Box>
