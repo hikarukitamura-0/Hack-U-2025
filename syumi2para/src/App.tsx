@@ -7,7 +7,7 @@ import Main from './pages/main';
 import SwipePage from './pages/swipe';
 import ItiranPage from './pages/itiran'; // 新設
 import FinalMatchPage from './pages/finalmatch'; // 新設
-import Liked from './pages/LikedKistPage';
+import Liked from './pages/LikedListPage';
 import Header from './components/header';
 import Footer from './components/footer';
 
