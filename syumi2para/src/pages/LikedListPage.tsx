@@ -14,7 +14,7 @@ const LikedListPage: React.FC = () => {
       <Container maxWidth="sm">
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Celebration sx={{ fontSize: 60, color: '#d21dff', mb: 2 }} />
-          <Typography variant="h4" sx={{ fontWeight: 900 }}>最終候補リスト</Typography>
+          <Typography variant="h4" sx={{ fontWeight: 900, color:'black' }}>最終候補リスト</Typography>
           <Typography variant="body2" color="text.secondary">
             あなたが「いいね」した趣味のまとめです
           </Typography>

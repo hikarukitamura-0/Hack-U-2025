@@ -8,7 +8,7 @@ import initialHobbiesData from '../data/hobbies.json';
 const styles = {
   container: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '100vh', py: 5, backgroundColor: '#f0f0f0' },
   infoContainer: { height: 40, mb: 2 },
-  infoText: { color: '#888', fontSize: '14px' },
+  infoText: { color: '#888', fontSize: '15px' },
   cardContainer: { position: 'relative', width: '350px', height: '500px', maxWidth: '90vw' },
   motionWrapper: { position: 'absolute' as const, width: '100%', height: '100%', cursor: 'grab' },
   card: { 
@@ -104,7 +104,7 @@ const FinalSwipePage: React.FC = () => {
       <Box sx={styles.infoContainer}>
         {cards.length > 0 ? (
           lastDirection ? (
-            <Typography sx={{ ...styles.infoText, color: lastDirection === 'right' ? '#ff4081' : '#555', fontWeight: 'bold', fontSize: '20px' }}>
+            <Typography sx={{ ...styles.infoText, color: lastDirection === 'right' ? '#ff4081' : '#555', fontWeight: 'bold', fontSize: '35px', mt: -5 }}>
               判定: {lastDirection === 'right' ? 'LIKE! ❤️' : 'NOPE... 💔'}
             </Typography>
           ) : (
